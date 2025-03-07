@@ -13,6 +13,18 @@
         android:theme="@style/Theme.AIRecommender"
         tools:targetApi="31">
         <activity
+            android:name=".view.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.IntroductionActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>

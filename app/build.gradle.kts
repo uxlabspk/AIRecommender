@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "io.github.uxlabspk.airecommender"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "io.github.uxlabspk.airecommender"

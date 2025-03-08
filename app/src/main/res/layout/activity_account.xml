@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -27,29 +27,33 @@
 
             <Button
                 android:id="@+id/sign_in_btn"
-                android:layout_marginTop="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
                 android:text="@string/sign_in"
-                android:elevation="12dp"
-                android:layout_marginBottom="5dp"
+                android:elevation="6dp"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="32dp"
                 android:backgroundTint="@color/black"
                 android:textColor="@android:color/white"/>
 
             <Button
                 android:id="@+id/sign_up_btn"
-                android:layout_marginTop="11dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
                 android:text="@string/sign_up"
-                android:elevation="12dp"
-                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                android:elevation="6dp"
+                android:layout_marginHorizontal="32dp"
                 android:backgroundTint="@color/black"
                 android:textColor="@android:color/white"/>
 
             <TextView
-                android:layout_marginVertical="24dp"
-                android:textSize="22sp"
+                android:layout_marginVertical="22dp"
+                android:textSize="21sp"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/or"
                 android:textAlignment="center"
@@ -58,11 +62,13 @@
 
             <Button
                 android:id="@+id/google_btn"
-                android:layout_marginTop="11dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
                 android:text="@string/google"
-                android:elevation="12dp"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                android:elevation="6dp"
+                android:layout_marginHorizontal="32dp"
                 android:layout_marginBottom="5dp"
                 android:backgroundTint="@color/red"
                 android:textColor="@android:color/white"/>

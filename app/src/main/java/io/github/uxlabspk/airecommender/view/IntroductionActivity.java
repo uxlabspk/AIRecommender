@@ -1,6 +1,8 @@
 package io.github.uxlabspk.airecommender.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,5 +25,9 @@ public class IntroductionActivity extends AppCompatActivity {
         init();
     }
 
-    private void init() {}
+    private void init() {
+        binding.customButton.setOnClickListener(v -> {
+            startActivity(new Intent(IntroductionActivity.this, AccountActivity.class));
+        });
+    }
 }

@@ -7,7 +7,8 @@
 
     <color name="light_bg_color">#FFFFFFFF</color>
     <color name="bg_fields_color">#FFFAFAFA</color>
-    <color name="light_txt_color">#FF333333</color>
     <color name="placeholder_text_color">#FF707070</color>
-    
+
+    <color name="light_txt_color">#FF333333</color>
+    <color name="border_color">#FFf5f5f5</color>
 </resources>

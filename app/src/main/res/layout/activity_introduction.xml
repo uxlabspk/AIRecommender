@@ -47,13 +47,16 @@
                android:text="@string/app_description"
                />
 
-           <include
-               android:id="@+id/buttonOne"
+           <Button
+               android:id="@+id/customButton"
+               android:layout_marginTop="40dp"
                android:layout_width="wrap_content"
-               android:layout_height="50dp"
+               android:layout_height="wrap_content"
                android:text="@string/getStarted"
-               layout="@layout/primary_button"
-               android:layout_marginTop="40dp"/>
+               android:elevation="12dp"
+               android:layout_marginBottom="5dp"
+               android:backgroundTint="@color/black"
+               android:textColor="@android:color/white"/>
 
        </LinearLayout>
 

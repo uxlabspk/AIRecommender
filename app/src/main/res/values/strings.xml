@@ -3,4 +3,12 @@
     <string name="logo_placeholder">logo</string>
     <string name="app_description">Suggests outfits based on style preferences, trends, weather, and occasion for personalized styling</string>
     <string name="getStarted">Get Started</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="or">OR</string>
+    <string name="google">Continue with Google</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="createAccountText"><u>Create new one</u>"</string>
 </resources>

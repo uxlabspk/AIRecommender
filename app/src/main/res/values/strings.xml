@@ -2,4 +2,5 @@
     <string name="app_name">AI Recommender</string>
     <string name="logo_placeholder">logo</string>
     <string name="app_description">Suggests outfits based on style preferences, trends, weather, and occasion for personalized styling</string>
+    <string name="getStarted">Get Started</string>
 </resources>

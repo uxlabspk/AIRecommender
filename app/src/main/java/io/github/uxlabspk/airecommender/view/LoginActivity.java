@@ -1,14 +1,11 @@
 package io.github.uxlabspk.airecommender.view;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,5 +20,11 @@ public class LoginActivity extends AppCompatActivity {
         init();
     }
 
-    private void init() {}
+    private void init() {
+        // goBack button
+        binding.goBack.setOnClickListener(v -> {
+            Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
+           // onBackPressed();
+        });
+    }
 }

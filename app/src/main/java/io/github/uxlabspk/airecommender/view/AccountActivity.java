@@ -45,8 +45,10 @@ public class AccountActivity extends AppCompatActivity {
     private void init() {
         // sign in button
         binding.signInBtn.setOnClickListener(v -> startActivity(new Intent(AccountActivity.this, LoginActivity.class)));
+
         // sign up button
         binding.signUpBtn.setOnClickListener(v -> startActivity(new Intent(AccountActivity.this, SignupActivity.class)));
+
         // continue with google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))

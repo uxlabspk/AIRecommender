@@ -9,9 +9,13 @@
     <string name="google">Continue with Google</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?\t</string>
     <string name="createAccountText"><u>Create new one</u>"</string>
     <string name="forget_password">Forget password?</string>
     <string name="full_name">Full Name</string>
-    <string name="already_have_an_account">Already have an account?</string>
+    <string name="already_have_an_account">Already have an account?\t</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_description">Do you want to remove the user? (this action is not reversible)</string>
+    <string name="confirm">Confirm</string>
 </resources>

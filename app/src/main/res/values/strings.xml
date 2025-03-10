@@ -14,4 +14,8 @@
     <string name="forget_password">Forget password?</string>
     <string name="full_name">Full Name</string>
     <string name="already_have_an_account">Already have an account?\t</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_description">Do you want to remove the user? (this action is not reversible)</string>
+    <string name="confirm">Confirm</string>
 </resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_input"
+    android:gravity="center"
+    android:padding="20dp"
+    android:layout_margin="20dp"
+    >
+
+    <ImageView
+        android:id="@+id/dialog_logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/logo_placeholder"
+        android:src="@drawable/ic_question"
+        app:tint="@color/light_txt_color" />
+
+    <TextView
+        android:id="@+id/dialog_headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/light_txt_color"
+        android:layout_marginTop="10dp"
+        android:textSize="21sp"
+
+        />
+
+    <TextView
+        android:id="@+id/dialog_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm_description"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/light_txt_color"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/yes_btn"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/no_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/delete"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+
+        <Button
+            android:id="@+id/no_btn"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_margin="5dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/yes_btn"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

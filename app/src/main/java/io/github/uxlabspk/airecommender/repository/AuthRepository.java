@@ -1,14 +1,21 @@
 package io.github.uxlabspk.airecommender.repository;
 
+import android.app.Application;
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
 import java.util.Objects;
 
 import io.github.uxlabspk.airecommender.model.UserModel;
@@ -18,6 +25,7 @@ public class AuthRepository {
     private final DatabaseReference databaseReference;
     private final MutableLiveData<FirebaseUser> userLiveData;
     private final MutableLiveData<String> errorLiveData;
+    private MutableLiveData<String> successLiveData;
 
     // Constructor
     public AuthRepository() {
@@ -25,6 +33,7 @@ public class AuthRepository {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         userLiveData = new MutableLiveData<>();
         errorLiveData = new MutableLiveData<>();
+        successLiveData = new MutableLiveData<>();
     }
 
     // SignIn With Email and Password
@@ -46,6 +55,7 @@ public class AuthRepository {
 
     // Login with Email and Password
     public void loginUser(String email, String password) {
+        Log.d("TAG", "init: " + email + " # " + password );
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                    if (task.isSuccessful()) {
@@ -72,6 +82,18 @@ public class AuthRepository {
                 });
     }
 
+    // reset password
+    public void resetPasswordRequest(String email) {
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(resetTask -> {
+                    if (resetTask.isSuccessful()) {
+                        successLiveData.setValue("Reset link sent to your email.");
+                    } else {
+                        errorLiveData.setValue(Objects.requireNonNull(resetTask.getException()).getMessage());
+                    }
+                });
+    }
+
     // Getter
     public LiveData<FirebaseUser> getUserLiveData() {
         return  userLiveData;
@@ -79,6 +101,10 @@ public class AuthRepository {
 
     public LiveData<String> getErrorLiveData() {
         return errorLiveData;
+    }
+
+    public LiveData<String>  getSuccessLiveData() {
+        return successLiveData;
     }
 
 }

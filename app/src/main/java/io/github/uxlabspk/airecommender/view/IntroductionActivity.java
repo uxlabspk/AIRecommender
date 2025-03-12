@@ -10,6 +10,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityIntroductionBinding;
 
@@ -26,6 +29,19 @@ public class IntroductionActivity extends AppCompatActivity {
     }
 
     private void init() {
+        // Ready the Firebase
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().getReference().keepSynced(true);
+
+        // Check whether the user is login or not
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+
+
+        // Getting started
         binding.getStartedBtn.setOnClickListener(v -> {
             startActivity(new Intent(IntroductionActivity.this, AccountActivity.class));
         });

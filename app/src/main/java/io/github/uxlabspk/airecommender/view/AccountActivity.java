@@ -38,11 +38,15 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAccountBinding.inflate(getLayoutInflater());
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         setContentView(binding.getRoot());
         init();
     }
 
     private void init() {
+        // observe the changes
+        observeChanges();
+
         // sign in button
         binding.signInBtn.setOnClickListener(v -> startActivity(new Intent(AccountActivity.this, LoginActivity.class)));
 
@@ -58,6 +62,19 @@ public class AccountActivity extends AppCompatActivity {
         binding.googleBtn.setOnClickListener(v -> startActivityForResult(googleSignInClient.getSignInIntent(), RC_SIGN_IN));
     }
 
+    private void observeChanges() {
+        authViewModel.getUserLiveData().observe(this, user -> {
+            if (user != null) {
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
+        });
+
+        authViewModel.getErrorLiveData().observe(this, error -> {
+            if (error != null) Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -66,8 +83,6 @@ public class AccountActivity extends AppCompatActivity {
                 GoogleSignInAccount account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
                 AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                 authViewModel.continueWithGoogle(credential);
-                startActivity(new Intent(AccountActivity.this, MainActivity.class));
-                finish();
             } catch (ApiException e) {
                 Log.d("ERROR : ", Objects.requireNonNull(e.getMessage()));
                 Toast.makeText(this, "Google Sign-In Failed", Toast.LENGTH_SHORT).show();

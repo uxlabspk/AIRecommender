@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseApp;
+
 import io.github.uxlabspk.airecommender.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

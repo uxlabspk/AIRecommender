@@ -27,11 +27,19 @@ public class AuthViewModel extends ViewModel {
         authRepository.continueWithGoogle(authCredential);
     }
 
+    public void resetPassword(String email) {
+        authRepository.resetPasswordRequest(email);
+    }
+
     public LiveData<FirebaseUser> getUserLiveData() {
         return authRepository.getUserLiveData();
     }
 
     public LiveData<String> getErrorLiveData() {
         return authRepository.getErrorLiveData();
+    }
+
+    public LiveData<String> getSuccessLiveData() {
+        return authRepository.getSuccessLiveData();
     }
 }

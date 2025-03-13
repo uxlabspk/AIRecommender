@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_back"
-            android:backgroundTint="@color/black"/>
+            android:backgroundTint="@color/black"
+            android:contentDescription="@string/logo_placeholder" />
 
         <TextView
             android:id="@+id/textView"
@@ -77,6 +78,7 @@
                     android:id="@+id/editTextNameAddress"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
+                    android:autofillHints="username"
                     android:textColor="@color/light_txt_color"
                     android:textColorHint="@color/placeholder_text_color"
                     android:background="@drawable/bg_input"
@@ -111,6 +113,7 @@
                     android:id="@+id/editTextEmail"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
+                    android:autofillHints="emailAddress"
                     android:background="@drawable/bg_input"
                     android:textColor="@color/light_txt_color"
                     android:textColorHint="@color/light_txt_color"
@@ -147,6 +150,7 @@
                     android:id="@+id/userPassword"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
+                    android:autofillHints="password"
                     android:textColor="@color/light_txt_color"
                     android:textColorHint="@color/light_txt_color"
                     android:background="@drawable/bg_input"
@@ -160,10 +164,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/google_btn"
+                android:id="@+id/signupBtn"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="@string/sign_in"
+                android:text="@string/sign_up"
                 android:fontFamily="@font/inter_medium"
                 android:textSize="16sp"
                 android:elevation="6dp"

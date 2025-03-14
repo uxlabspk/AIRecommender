@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavLabelStyle" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/light_txt_color</item> <!-- Customize the color -->
+        <item name="android:fontFamily">@font/inter_regular</item>    <!-- Set text style to normal -->
+
+    </style>
+
+</resources>

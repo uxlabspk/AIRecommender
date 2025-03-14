@@ -24,19 +24,16 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         binding.navView.setOnItemSelectedListener(item -> {
             Fragment fragment;
-            switch (item.getItemId()) {
-                case R.id.item_home:
-                    fragment = new HomeFragment();
-                    break;
-                case R.id.item_profile:
-                    fragment = new ProfileFragment();
-                    break;
-                default:
-                    return false;
+            if (item.getItemId() == R.id.item_home) {
+                fragment = new HomeFragment();
+            } else if (item.getItemId() == R.id.item_profile) {
+                fragment = new ProfileFragment();
+            } else {
+                fragment = new HomeFragment();
             }
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
+                    .replace(binding.fragmentContainer.getId(), fragment)
                     .commit();
 
             return true;

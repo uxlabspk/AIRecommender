@@ -38,6 +38,7 @@
                 android:id="@+id/user_profile_pic"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:src="@drawable/ic_user"
                 android:contentDescription="@string/user_profile_str"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="90dp" />
@@ -110,7 +111,7 @@
                     />
 
                 <android.widget.Button
-                    android:id="@+id/edu_quizzes_results"
+                    android:id="@+id/delete_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/delete_account"
@@ -124,6 +125,7 @@
                     android:paddingEnd="10dp"
                     android:textAlignment="textStart"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:drawableEnd="@drawable/ic_delete"
                     />
 

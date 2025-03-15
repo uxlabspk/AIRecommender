@@ -27,6 +27,14 @@ public class AuthViewModel extends ViewModel {
         authRepository.continueWithGoogle(authCredential);
     }
 
+    public void logoutUser() {
+        authRepository.logoutUser();
+    }
+
+    public void deleteUser() {
+        authRepository.deleteUser();
+    }
+
     public void resetPassword(String email) {
         authRepository.resetPasswordRequest(email);
     }

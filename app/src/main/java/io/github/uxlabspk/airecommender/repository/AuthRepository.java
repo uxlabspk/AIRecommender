@@ -25,28 +25,27 @@ public class AuthRepository {
     private final DatabaseReference databaseReference;
     private final MutableLiveData<FirebaseUser> userLiveData;
     private final MutableLiveData<String> errorLiveData;
-    private MutableLiveData<String> successLiveData;
+    private final MutableLiveData<String> successLiveData;
 
     // Constructor
     public AuthRepository() {
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         userLiveData = new MutableLiveData<>();
         errorLiveData = new MutableLiveData<>();
         successLiveData = new MutableLiveData<>();
     }
 
-    // SignIn With Email and Password
+    // SignUp With Email and Password
     public void registerUser(String name, String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                    if (task.isSuccessful()) {
                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                       if (firebaseUser != null) {
-                           UserModel userModel = new UserModel(firebaseUser.getUid(), name, email);
-                           databaseReference.child(firebaseUser.getUid()).setValue(userModel);
-                           userLiveData.setValue(firebaseUser);
-                       }
+                       assert firebaseUser != null;
+                       UserModel userModel = new UserModel(firebaseUser.getUid(), name, email);
+                       databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
+                       userLiveData.setValue(firebaseUser);
                    } else {
                        errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
                    }
@@ -55,7 +54,6 @@ public class AuthRepository {
 
     // Login with Email and Password
     public void loginUser(String email, String password) {
-        Log.d("TAG", "init: " + email + " # " + password );
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                    if (task.isSuccessful()) {
@@ -92,6 +90,16 @@ public class AuthRepository {
                         errorLiveData.setValue(Objects.requireNonNull(resetTask.getException()).getMessage());
                     }
                 });
+    }
+
+    // logout user
+    public void logoutUser() {
+        firebaseAuth.signOut();
+    }
+
+    // delete user
+    public void deleteUser() {
+        Objects.requireNonNull(firebaseAuth.getCurrentUser()).delete();
     }
 
     // Getter

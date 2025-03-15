@@ -18,10 +18,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        init();
+        init(savedInstanceState);
     }
 
-    private void init() {
+    private void init(Bundle savedInstanceState) {
+        // On UI refresh, No transaction will occur.
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        }
+
         binding.navView.setOnItemSelectedListener(item -> {
             Fragment fragment;
             if (item.getItemId() == R.id.item_home) {

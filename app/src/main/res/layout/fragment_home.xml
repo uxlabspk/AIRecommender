@@ -25,5 +25,23 @@
     </androidx.appcompat.widget.Toolbar>
 
 
+    <Button
+        android:id="@+id/cloth_form"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/black"
+        android:elevation="6dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="Cloth Form"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+
 
 </RelativeLayout>

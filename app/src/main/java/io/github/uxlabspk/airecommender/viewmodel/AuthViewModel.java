@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;
 
+import io.github.uxlabspk.airecommender.model.UserModel;
 import io.github.uxlabspk.airecommender.repository.AuthRepository;
 
 public class AuthViewModel extends ViewModel {
@@ -13,6 +14,10 @@ public class AuthViewModel extends ViewModel {
 
     public AuthViewModel() {
         authRepository = new AuthRepository();
+    }
+
+    public void fetchUserInformation() {
+        authRepository.fetchUserInformation();
     }
 
     public void registerUser(String userName, String userEmail, String userPassword) {
@@ -49,5 +54,9 @@ public class AuthViewModel extends ViewModel {
 
     public LiveData<String> getSuccessLiveData() {
         return authRepository.getSuccessLiveData();
+    }
+
+    public LiveData<UserModel> getUserModelLiveData() {
+        return authRepository.getUserModelLiveData();
     }
 }

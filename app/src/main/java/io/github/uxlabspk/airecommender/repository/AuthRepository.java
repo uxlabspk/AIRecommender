@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -12,8 +13,11 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +30,7 @@ public class AuthRepository {
     private final MutableLiveData<FirebaseUser> userLiveData;
     private final MutableLiveData<String> errorLiveData;
     private final MutableLiveData<String> successLiveData;
+    private final MutableLiveData<UserModel> userModelLiveData;
 
     // Constructor
     public AuthRepository() {
@@ -34,6 +39,7 @@ public class AuthRepository {
         userLiveData = new MutableLiveData<>();
         errorLiveData = new MutableLiveData<>();
         successLiveData = new MutableLiveData<>();
+        userModelLiveData = new MutableLiveData<>();
     }
 
     // SignUp With Email and Password
@@ -92,6 +98,32 @@ public class AuthRepository {
                 });
     }
 
+    // fetch user Information
+    public void fetchUserInformation() {
+        if (firebaseAuth.getCurrentUser() == null) {
+            errorLiveData.setValue("No user is signed in");
+            return;
+        }
+
+        databaseReference.child("Users").child(firebaseAuth.getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserModel userModel = snapshot.getValue(UserModel.class);
+                        if (userModel != null) {
+                            userModelLiveData.setValue(userModel);
+                        } else {
+                            errorLiveData.setValue("User data not found");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        errorLiveData.setValue(error.getMessage());
+                    }
+                });
+    }
+
     // logout user
     public void logoutUser() {
         firebaseAuth.signOut();
@@ -113,6 +145,10 @@ public class AuthRepository {
 
     public LiveData<String>  getSuccessLiveData() {
         return successLiveData;
+    }
+
+    public LiveData<UserModel> getUserModelLiveData() {
+        return userModelLiveData;
     }
 
 }

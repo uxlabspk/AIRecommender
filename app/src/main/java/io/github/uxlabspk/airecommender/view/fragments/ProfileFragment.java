@@ -43,6 +43,9 @@ public class ProfileFragment extends Fragment {
         // initializing the viewmodel
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
+        // fetch user information
+        authViewModel.fetchUserInformation();
+
         // observe the changes
         observeChanges();
 
@@ -90,6 +93,11 @@ public class ProfileFragment extends Fragment {
     }
 
     private void observeChanges() {
+        authViewModel.getUserModelLiveData().observe(getViewLifecycleOwner(), user -> {
+            binding.userName.setText(user.getUserName());
+            binding.userEmail.setText(user.getUserEmail());
+        });
+
         // getting error data
         authViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), error -> {
             if (error != null) Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();

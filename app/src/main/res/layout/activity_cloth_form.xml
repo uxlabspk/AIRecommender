@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Back"
+            android:contentDescription="@string/back"
             android:padding="8dp"
             android:src="@drawable/ic_back" />
 
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Recommender"
+            android:text="@string/recomander"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Age">
+                android:hint="@string/age">
 
                 <AutoCompleteTextView
                     android:id="@+id/ageDropdown"
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Gender">
+                    android:hint="@string/gender">
 
                     <AutoCompleteTextView
                         android:id="@+id/genderDropdown"
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Budget">
+                    android:hint="@string/budget">
 
                     <AutoCompleteTextView
                         android:id="@+id/budgetDropdown"
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Body Measurements"
+                android:text="@string/body_measur"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Body Type">
+                android:hint="@string/body_type">
 
                 <AutoCompleteTextView
                     android:id="@+id/bodyTypeDropdown"
@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Fit Type">
+                android:hint="@string/fitType">
 
                 <AutoCompleteTextView
                     android:id="@+id/fitTypeDropdown"
@@ -156,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Height">
+                    android:hint="@string/height">
 
                     <AutoCompleteTextView
                         android:id="@+id/heightDropdown"
@@ -173,7 +173,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:hint="Weight">
+                    android:hint="@string/weight">
 
                     <AutoCompleteTextView
                         android:id="@+id/weightDropdown"
@@ -189,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Size">
+                    android:hint="@string/size">
 
                     <AutoCompleteTextView
                         android:id="@+id/sizeDropdown"
@@ -205,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Style Preference"
+                android:text="@string/style_reference"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -222,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Style">
+                    android:hint="@string/Style">
 
                     <AutoCompleteTextView
                         android:id="@+id/styleDropdown"
@@ -239,7 +239,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:hint="Colors">
+                    android:hint="@string/colors">
 
                     <AutoCompleteTextView
                         android:id="@+id/colorsDropdown"
@@ -255,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Fabric">
+                    android:hint="@string/fabric">
 
                     <AutoCompleteTextView
                         android:id="@+id/fabricDropdown"
@@ -271,7 +271,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Ocassion"
+                android:text="@string/occasion"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -281,7 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Occasion Type">
+                android:hint="@string/occasion_type">
 
                 <AutoCompleteTextView
                     android:id="@+id/occasionTypeDropdown"
@@ -296,7 +296,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Clothing Type"
+                android:text="@string/cloth_form"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -313,7 +313,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Items">
+                    android:hint="@string/Items">
 
                     <AutoCompleteTextView
                         android:id="@+id/itemsDropdown"
@@ -329,7 +329,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Preference">
+                    android:hint="@string/Preference">
 
                     <AutoCompleteTextView
                         android:id="@+id/preferenceDropdown"
@@ -347,21 +347,24 @@
         </LinearLayout>
 
 
-
     </ScrollView>
 
+
     <!-- Recommend Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/recommendButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/bg_btn"
         android:padding="12dp"
-        android:text="Recommend"
+        android:text="@string/recommend"
         android:textAllCaps="false"
-        android:textColor="@color/light_txt_color"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

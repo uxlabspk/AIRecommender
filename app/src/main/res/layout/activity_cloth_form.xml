@@ -345,6 +345,9 @@
                 android:layout_height="80dp" />
 
         </LinearLayout>
+
+
+
     </ScrollView>
 
     <!-- Recommend Button -->

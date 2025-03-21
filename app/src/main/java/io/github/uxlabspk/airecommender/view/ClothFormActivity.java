@@ -9,8 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,7 +27,7 @@ import retrofit2.Response;
 
 public class ClothFormActivity extends AppCompatActivity {
     private ActivityClothFormBinding binding;
-    private static final String API_KEY = "Bearer hf_key";
+    private static final String API_KEY = "Bearer ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +59,48 @@ public class ClothFormActivity extends AppCompatActivity {
     }
 
     private void recommend() {
+        // Check if all fields are filled
+        if (!validateFormInputs()) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Get values from all dropdowns
+        String age = binding.ageDropdown.getText().toString();
+        String gender = binding.genderDropdown.getText().toString();
+        String budget = binding.budgetDropdown.getText().toString();
+        String bodyType = binding.bodyTypeDropdown.getText().toString();
+        String fitType = binding.fitTypeDropdown.getText().toString();
+        String height = binding.heightDropdown.getText().toString();
+        String weight = binding.weightDropdown.getText().toString();
+        String size = binding.sizeDropdown.getText().toString();
+        String style = binding.styleDropdown.getText().toString();
+        String colors = binding.colorsDropdown.getText().toString();
+        String fabric = binding.fabricDropdown.getText().toString();
+        String occasionType = binding.occasionTypeDropdown.getText().toString();
+        String items = binding.itemsDropdown.getText().toString();
+        String preference = binding.preferenceDropdown.getText().toString();
+
+        // Build the prompt using all dropdown values
+        String prompt = buildPrompt(age, gender, budget, bodyType, fitType, height,
+                weight, size, style, colors, fabric, occasionType, items, preference);
+
+        // Show loading indicator
+        binding.recommendButton.setEnabled(false);
+        binding.recommendButton.setText("Generating recommendation...");
+
         // Create JSON request body
-        String jsonRequest = "{ \"inputs\": \"Astronaut riding a horse\" }";
+        String jsonRequest = "{ \"inputs\": \"" + prompt + "\" }";
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonRequest);
 
         // Make API call
         HuggingFaceApi apiService = RetrofitClient.getApiService();
         apiService.generateImage(API_KEY, requestBody).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                binding.recommendButton.setEnabled(true);
+                binding.recommendButton.setText("Recommend");
+
                 if (response.isSuccessful() && response.body() != null) {
                     // Convert ResponseBody to an Image
                     try {
@@ -93,26 +124,57 @@ public class ClothFormActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(ClothFormActivity.this, ResultActivity.class);
                         intent.putExtra("image_path", file.getAbsolutePath());
+                        intent.putExtra("prompt", prompt);  // Pass the prompt to result activity
                         startActivity(intent);
 
-                        // Load image into ImageView
-//                        runOnUiThread(() -> Glide.with(ClothFormActivity.this)
-//                                .load(file)
-//                                .into(binding.previewImage));
-//                        Toast.makeText(ClothFormActivity.this, "Generating recommendations...", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         Log.e("API_ERROR", "Error processing image: " + e.getMessage());
+                        Toast.makeText(ClothFormActivity.this, "Error processing image", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("API_ERROR", "Response error: " + response.errorBody());
+                    Toast.makeText(ClothFormActivity.this, "Failed to generate recommendation", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                binding.recommendButton.setEnabled(true);
+                binding.recommendButton.setText("Recommend");
                 Log.e("API_ERROR", "Request failed: " + t.getMessage());
+                Toast.makeText(ClothFormActivity.this, "Network error. Please try again", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean validateFormInputs() {
+        // Check if all dropdown fields have a selection
+        return !binding.ageDropdown.getText().toString().isEmpty() &&
+                !binding.genderDropdown.getText().toString().isEmpty() &&
+                !binding.budgetDropdown.getText().toString().isEmpty() &&
+                !binding.bodyTypeDropdown.getText().toString().isEmpty() &&
+                !binding.fitTypeDropdown.getText().toString().isEmpty() &&
+                !binding.heightDropdown.getText().toString().isEmpty() &&
+                !binding.weightDropdown.getText().toString().isEmpty() &&
+                !binding.sizeDropdown.getText().toString().isEmpty() &&
+                !binding.styleDropdown.getText().toString().isEmpty() &&
+                !binding.colorsDropdown.getText().toString().isEmpty() &&
+                !binding.fabricDropdown.getText().toString().isEmpty() &&
+                !binding.occasionTypeDropdown.getText().toString().isEmpty() &&
+                !binding.itemsDropdown.getText().toString().isEmpty() &&
+                !binding.preferenceDropdown.getText().toString().isEmpty();
+    }
+
+    private String buildPrompt(String age, String gender, String budget, String bodyType,
+                               String fitType, String height, String weight, String size,
+                               String style, String colors, String fabric, String occasionType,
+                               String items, String preference) {
+        return "Generate a realistic outfit recommendation for a " + gender + " aged " + age +
+                " with a " + bodyType + " body type, " + height + " tall, weighing " + weight +
+                ", wearing size " + size + ". The outfit should be " + style + " style with " +
+                colors + " colors, made of " + fabric + " fabric, suitable for " + occasionType +
+                " occasions. Focus on " + items + " items that fit " + fitType + ". The person prefers " +
+                preference + " clothing within a budget of " + budget + ". The image should show a complete outfit on a person.";
     }
 
     private void setupAgeDropdown() {

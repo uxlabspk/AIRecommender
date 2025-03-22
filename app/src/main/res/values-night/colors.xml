@@ -10,5 +10,5 @@
     <color name="placeholder_text_color">#FF707070</color>
 
     <color name="light_txt_color">#FFf5f5f5</color>
-    <color name="border_color">#FFf5f5f5</color>
+    <color name="border_color">#FF707070</color>
 </resources>

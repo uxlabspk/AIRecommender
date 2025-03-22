@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/light_bg_color">
 
-    <!-- Toolbar with back button and title -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
+        android:background="@drawable/bg_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,16 +21,17 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/back"
             android:padding="8dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            app:tint="@color/light_txt_color" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/recomander"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/light_txt_color"
+            android:textSize="21sp"
+            android:fontFamily="@font/inter_regular" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -38,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="16dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@id/recommendButton"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -109,7 +111,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/body_measur"
-                android:textColor="#000000"
+                android:textColor="@color/light_txt_color"
+                android:fontFamily="@font/inter_regular"
                 android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -206,7 +209,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/style_reference"
-                android:textColor="#000000"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -272,7 +276,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/occasion"
-                android:textColor="#000000"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -297,7 +302,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/cloth_form"
-                android:textColor="#000000"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -338,11 +344,6 @@
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-
-            <!-- Spacing to ensure content doesn't get cut off by the button -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="80dp" />
 
         </LinearLayout>
 

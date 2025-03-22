@@ -27,7 +27,7 @@ import retrofit2.Response;
 
 public class ClothFormActivity extends AppCompatActivity {
     private ActivityClothFormBinding binding;
-    private static final String API_KEY = "Bearer ";
+    private static final String API_KEY = "Bearer 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";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

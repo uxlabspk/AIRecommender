@@ -49,4 +49,7 @@
     <string name="recomander">Recommender</string>
     <string name="back">Back</string>
     <string name="recommended_cloths">Recommended Cloths</string>
+    <string name="cloth_recommender">Cloth Recommender</string>
+    <string name="get_inspired">Get Inspired</string>
+    <string name="makeup_recommender">Makeup Recommender</string>
 </resources>

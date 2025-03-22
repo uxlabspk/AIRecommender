@@ -25,23 +25,63 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <Button
-        android:id="@+id/cloth_form"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="20sp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/black"
-        android:elevation="6dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="Cloth Recommender"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/logo_placeholder"
+                android:src="@drawable/ic_account_screen" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="20sp"
+                android:textColor="@color/light_txt_color"
+                android:text="@string/get_inspired" />
+
+            <Button
+                android:id="@+id/cloth_form"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="@color/black"
+                android:elevation="6dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/cloth_recommender"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/makeup_form"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="@color/black"
+                android:elevation="6dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/makeup_recommender"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>

@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.io.OutputStream;
 
+import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityResultBinding;
 
 public class ResultActivity extends AppCompatActivity {
@@ -46,8 +47,13 @@ public class ResultActivity extends AppCompatActivity {
             }
         }
 
+        // on download button clicked
+        binding.downloadBtn.setOnClickListener(view -> saveImageToGalleryModern(imagePath));
+
         // on favourite button clicked
-        binding.favouriteButton.setOnClickListener(view -> saveImageToGalleryModern(imagePath));
+        binding.favouriteButton.setOnClickListener(view -> {
+            binding.favouriteButton.setImageDrawable(getDrawable(R.drawable.ic_filled_heart));
+        });
     }
 
     private void saveImageToGalleryModern(String imagePath) {

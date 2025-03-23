@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 
+import io.github.uxlabspk.airecommender.BuildConfig;
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.api.HuggingFaceApi;
 import io.github.uxlabspk.airecommender.api.RetrofitClient;
@@ -25,9 +26,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+
 public class ClothFormActivity extends AppCompatActivity {
     private ActivityClothFormBinding binding;
-    private static final String API_KEY = "Bearer ";
+    private static final String API_KEY = "Bearer " + BuildConfig.apiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

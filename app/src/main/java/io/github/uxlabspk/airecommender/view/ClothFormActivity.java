@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.UUID;
 
 import io.github.uxlabspk.airecommender.BuildConfig;
 import io.github.uxlabspk.airecommender.R;
@@ -108,7 +109,7 @@ public class ClothFormActivity extends AppCompatActivity {
                     // Convert ResponseBody to an Image
                     try {
                         InputStream inputStream = response.body().byteStream();
-                        File file = new File(getCacheDir(), "generated_image.png");
+                        File file = new File(getCacheDir(), "generated_image" + UUID.randomUUID() + ".png");
                         OutputStream outputStream = null;
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                             outputStream = Files.newOutputStream(file.toPath());
@@ -172,12 +173,54 @@ public class ClothFormActivity extends AppCompatActivity {
                                String fitType, String height, String weight, String size,
                                String style, String colors, String fabric, String occasionType,
                                String items, String preference) {
-        return "Generate a realistic outfit recommendation for a " + gender + " aged " + age +
-                " with a " + bodyType + " body type, " + height + " tall, weighing " + weight +
-                ", wearing size " + size + ". The outfit should be " + style + " style with " +
-                colors + " colors, made of " + fabric + " fabric, suitable for " + occasionType +
-                " occasions. Focus on " + items + " items that fit " + fitType + ". The person prefers " +
-                preference + " clothing within a budget of " + budget + ". The image should show a complete outfit on a person.";
+
+        // Generate a personalized outfit recommendation for
+        // a female, aged 25,  with an hourglass body type,
+        // 5'6'' tall, and weighing 60kg.
+        // The outfit should  be in a casual chic style,
+        // featuring pastel colors, made
+        // from cotton material,  and
+        // suitable for work occasions. Focus on tops,
+        // pants, and shoes, ensuring they fit  slim
+        // fit preferences. Take into account
+        // cultural influences from Islamic,
+        // incorporating  traditional or modern elements as per
+        // the user's preference. The person prefers
+        // eco-friendly  clothing, keeping within a
+        // budget of $100-$200. Provide a detailed
+        // description of the outfit,  including
+        // accessories and footwear, ensuring the
+        // recommendation is both practical and stylish.
+
+        return "Generate a personalized outfit recommendation for a "
+                + gender
+                + ", aged "
+                + age
+                + ", with a "
+                + bodyType
+                + " body type, "
+                + height
+                + " tall, and weighing "
+                + weight
+                + ". The outfit should be in a "
+                + style
+                + " chic style, featuring "
+                + colors
+                + " colors, made from "
+                + fabric
+                + " material, and suitable for "
+                + occasionType
+                + " occasions. Focus on tops, pants, shoes and  "
+                + items
+                + ", ensuring they fit "
+                + fitType
+                + " preferences. Take into account cultural influences from islamic, incorporating "
+                + "traditional or modern elements as per the user's preference. The person prefers "
+                + preference
+                + "clothing, keeping within a budget of "
+                + budget
+                + ". Provide a detailed description of the outfit, "
+                + "including accessories and footwear, ensuring the recommendation is both practical and stylish. Also show the items along with model ";
     }
 
     private void setupAgeDropdown() {

@@ -54,4 +54,7 @@
     <string name="makeup_recommender">Makeup Recommender</string>
     <string name="tagline">Your Perfect Outfit Is Just A Tap Away!</string>
     <string name="Note"><b>Note</b> : This outfit suits your age, shape and style.</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="update_profile">Update Profile</string>
 </resources>

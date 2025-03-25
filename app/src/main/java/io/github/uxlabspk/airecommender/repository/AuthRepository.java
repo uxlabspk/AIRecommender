@@ -31,8 +31,6 @@ public class AuthRepository {
     private final MutableLiveData<String> successLiveData;
     private final MutableLiveData<UserModel> userModelLiveData;
 
-    private String downlaodURL;
-
     // Constructor
     public AuthRepository() {
         firebaseAuth = FirebaseAuth.getInstance();
@@ -55,8 +53,6 @@ public class AuthRepository {
                            StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + firebaseAuth.getCurrentUser().getUid());
                            ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> {
                                ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                                   downlaodURL = uri.toString();
-                                   Log.d("TAG", "registerUser: " + downlaodURL);
                                    UserModel userModel = new UserModel(firebaseUser.getUid(), uri.toString(), name, email);
                                    databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
                                    userLiveData.setValue(firebaseUser);

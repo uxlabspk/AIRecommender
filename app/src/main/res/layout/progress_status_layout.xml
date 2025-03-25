@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@drawable/bg_input"
+    android:backgroundTint="@color/light_bg_color"
     android:gravity="center"
     android:padding="20dp"
     android:layout_margin="20dp">
@@ -22,7 +23,7 @@
         android:id="@+id/loadingText"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text=""
+        android:text="@string/logo_placeholder"
         android:fontFamily="@font/inter_regular"
         android:textSize="16sp"
         android:layout_gravity="center_horizontal"

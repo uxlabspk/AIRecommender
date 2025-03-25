@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_bg_color"
     tools:context=".view.fragments.ProfileFragment">
 
@@ -39,6 +40,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/ic_user"
+                android:tint="@color/light_txt_color"
                 android:contentDescription="@string/user_profile_str"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="90dp" />

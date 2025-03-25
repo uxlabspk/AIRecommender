@@ -2,6 +2,7 @@ package io.github.uxlabspk.airecommender.repository;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class AuthRepository {
     }
 
     // SignUp With Email and Password
-    public void registerUser(String name, String email, String password) {
+    public void registerUser(Uri imagePath, String name, String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                    if (task.isSuccessful()) {

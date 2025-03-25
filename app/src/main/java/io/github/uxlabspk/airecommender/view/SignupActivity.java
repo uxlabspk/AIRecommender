@@ -1,7 +1,10 @@
 package io.github.uxlabspk.airecommender.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -21,6 +24,8 @@ public class SignupActivity extends AppCompatActivity {
     private ActivitySignupBinding binding;
     private AuthViewModel authViewModel;
     private ProgressStatus ps;
+    private Uri filePath;
+    private final int PICK_IMAGE_REQUEST = 22;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,10 @@ public class SignupActivity extends AppCompatActivity {
         ps.setCanceledOnTouchOutside(true);
 
         // go back listener
-        binding.goBack.setOnClickListener(v -> onBackPressed());
+        binding.goBack.setOnClickListener(v -> finish());
+
+        // on avatar selection
+        binding.userAvatar.setOnClickListener(view -> selectImage());
 
         // on already account click
         binding.alreadyAccountLink.setOnClickListener(v -> {
@@ -102,7 +110,39 @@ public class SignupActivity extends AppCompatActivity {
             ps.show();
 
             // create the user
-            authViewModel.registerUser(userName, email, password);
+            authViewModel.registerUser(filePath, userName, email, password);
+        }
+    }
+
+    private void selectImage() {
+        // Defining Implicit Intent to mobile gallery
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Image from here..."), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (
+                requestCode == PICK_IMAGE_REQUEST
+                        && resultCode == RESULT_OK
+                        && data != null
+                        && data.getData() != null
+        ) {
+            // Get the Uri of data
+            filePath = data.getData();
+            try {
+                // Setting image on image view using Bitmap
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                binding.userAvatar.setImageBitmap(bitmap);
+            }
+
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

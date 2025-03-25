@@ -1,5 +1,7 @@
 package io.github.uxlabspk.airecommender.viewmodel;
 
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,8 +22,8 @@ public class AuthViewModel extends ViewModel {
         authRepository.fetchUserInformation();
     }
 
-    public void registerUser(String userName, String userEmail, String userPassword) {
-        authRepository.registerUser(userName, userEmail, userPassword);
+    public void registerUser(Uri imagePath, String userName, String userEmail, String userPassword) {
+        authRepository.registerUser(imagePath, userName, userEmail, userPassword);
     }
 
     public void loginUser(String userEmail, String userPassword) {

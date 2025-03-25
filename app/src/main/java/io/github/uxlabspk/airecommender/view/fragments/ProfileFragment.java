@@ -21,6 +21,7 @@ import io.github.uxlabspk.airecommender.databinding.FragmentProfileBinding;
 import io.github.uxlabspk.airecommender.utils.ConfirmDialog;
 import io.github.uxlabspk.airecommender.utils.ProgressStatus;
 import io.github.uxlabspk.airecommender.view.AccountActivity;
+import io.github.uxlabspk.airecommender.view.EditProfile;
 import io.github.uxlabspk.airecommender.view.IntroductionActivity;
 import io.github.uxlabspk.airecommender.view.LoginActivity;
 import io.github.uxlabspk.airecommender.view.MainActivity;
@@ -48,6 +49,11 @@ public class ProfileFragment extends Fragment {
 
         // observe the changes
         observeChanges();
+
+        // on edit profile
+        binding.editProfile.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), EditProfile.class));
+        });
 
         // on logout clicked
         binding.logoutBtn.setOnClickListener(v -> {

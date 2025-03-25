@@ -17,6 +17,8 @@ googleid = "1.1.1"
 firebaseDatabase = "21.0.0"
 playServicesAuth = "21.3.0"
 lifecycleViewmodelAndroid = "2.8.7"
+firebaseFirestore = "25.1.3"
+firebaseStorage = "21.0.1"
 
 [libraries]
 credentials-play-services-auth-v122 = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuthVersion" }
@@ -35,6 +37,8 @@ googleid = { group = "com.google.android.libraries.identity.googleid", name = "g
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 lifecycle-viewmodel-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-android", version.ref = "lifecycleViewmodelAndroid" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

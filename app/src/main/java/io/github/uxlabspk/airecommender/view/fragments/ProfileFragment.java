@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Objects;
 
 import io.github.uxlabspk.airecommender.R;
@@ -102,6 +104,8 @@ public class ProfileFragment extends Fragment {
         authViewModel.getUserModelLiveData().observe(getViewLifecycleOwner(), user -> {
             binding.userName.setText(user.getUserName());
             binding.userEmail.setText(user.getUserEmail());
+            if (user.getUserAvatar().isEmpty()) binding.userProfilePic.setImageResource(R.drawable.ic_user);
+            else Glide.with(getContext()).load(user.getUserAvatar()).into(binding.userProfilePic);
         });
 
         // getting error data

@@ -109,7 +109,7 @@
                     android:paddingEnd="10dp"
                     android:textAlignment="textStart"
                     android:layout_marginTop="10dp"
-                    android:drawableEnd="@drawable/ic_edit"
+                    android:drawableEnd="@drawable/ic_outline_heart"
                     />
 
                 <android.widget.Button

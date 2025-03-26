@@ -60,4 +60,15 @@
     <string name="no_favourite_images">Nothing here</string>
     <string name="no_favourite_images_found">No favourite images found.</string>
     <string name="favourite_images_text">Favourite Images</string>
+    <string name="personalInfo">Personal Information</string>
+    <string name="skinDetailes">Skin Details</string>
+    <string name="skinTone">Skin Tone</string>
+    <string name="skinType">Skin Type</string>
+    <string name="makeup_prefrence">Makeup Preference</string>
+    <string name="makeup">Makeup</string>
+    <string name="products">Products</string>
+    <string name="colorPreference">Color Preference</string>
+    <string name="shades">Shades</string>
+    <string name="accessories">Accessories</string>
+    <string name="makeupAccessories">Makeup Accessories</string>
 </resources>

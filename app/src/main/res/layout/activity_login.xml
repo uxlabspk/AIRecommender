@@ -67,9 +67,10 @@
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:boxStrokeColor="@color/border_color"
+                app:boxStrokeColor="@color/black"
                 app:boxStrokeWidth="0dp"
                 android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
                 app:boxStrokeWidthFocused="0dp"
                 app:layout_constraintTop_toBottomOf="@+id/appLogo">
 
@@ -85,7 +86,7 @@
                     android:inputType="textEmailAddress"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:textColor="@color/light_txt_color"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -102,9 +103,10 @@
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:boxStrokeColor="@color/border_color"
-                app:boxStrokeWidth="0dp"
+                app:boxStrokeColor="@color/black"
                 android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
+                app:boxStrokeWidth="0dp"
                 app:passwordToggleTint="#707070"
                 app:boxStrokeWidthFocused="0dp"
                 app:layout_constraintTop_toBottomOf="@+id/email_layout">
@@ -113,6 +115,7 @@
                     android:id="@+id/signin_user_password"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
+                    android:autofillHints="Password"
                     android:background="@drawable/bg_input"
                     android:ems="10"
                     android:fontFamily="@font/inter_regular"
@@ -120,7 +123,8 @@
                     android:inputType="textPassword"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:textColor="@color/light_txt_color"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
 
                     />
             </com.google.android.material.textfield.TextInputLayout>

@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/light_bg_color">
 
-    <!-- Toolbar with back button and title -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
+        android:background="@drawable/bg_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,18 +19,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Back"
+            android:contentDescription="@string/back"
             android:padding="8dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            app:tint="@color/light_txt_color" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Recommender"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="@string/recomander"
+            android:textColor="@color/light_txt_color"
+            android:textSize="21sp"
+            android:fontFamily="@font/inter_regular" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -38,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="16dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@id/recommendButton"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -53,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Age">
+                android:hint="@string/age">
 
                 <AutoCompleteTextView
                     android:id="@+id/ageDropdown"
@@ -76,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Gender">
+                    android:hint="@string/gender">
 
                     <AutoCompleteTextView
                         android:id="@+id/genderDropdown"
@@ -92,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Budget">
+                    android:hint="@string/budget">
 
                     <AutoCompleteTextView
                         android:id="@+id/budgetDropdown"
@@ -108,8 +110,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Body Measurements"
-                android:textColor="#000000"
+                android:text="@string/body_measur"
+                android:textColor="@color/light_txt_color"
+                android:fontFamily="@font/inter_regular"
                 android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Body Type">
+                android:hint="@string/body_type">
 
                 <AutoCompleteTextView
                     android:id="@+id/bodyTypeDropdown"
@@ -133,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Fit Type">
+                android:hint="@string/fitType">
 
                 <AutoCompleteTextView
                     android:id="@+id/fitTypeDropdown"
@@ -156,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Height">
+                    android:hint="@string/height">
 
                     <AutoCompleteTextView
                         android:id="@+id/heightDropdown"
@@ -173,7 +176,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:hint="Weight">
+                    android:hint="@string/weight">
 
                     <AutoCompleteTextView
                         android:id="@+id/weightDropdown"
@@ -189,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Size">
+                    android:hint="@string/size">
 
                     <AutoCompleteTextView
                         android:id="@+id/sizeDropdown"
@@ -205,8 +208,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Style Preference"
-                android:textColor="#000000"
+                android:text="@string/style_reference"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -222,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Style">
+                    android:hint="@string/Style">
 
                     <AutoCompleteTextView
                         android:id="@+id/styleDropdown"
@@ -239,7 +243,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:hint="Colors">
+                    android:hint="@string/colors">
 
                     <AutoCompleteTextView
                         android:id="@+id/colorsDropdown"
@@ -255,7 +259,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Fabric">
+                    android:hint="@string/fabric">
 
                     <AutoCompleteTextView
                         android:id="@+id/fabricDropdown"
@@ -271,8 +275,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Ocassion"
-                android:textColor="#000000"
+                android:text="@string/occasion"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -281,7 +286,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Occasion Type">
+                android:hint="@string/occasion_type">
 
                 <AutoCompleteTextView
                     android:id="@+id/occasionTypeDropdown"
@@ -296,8 +301,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Clothing Type"
-                android:textColor="#000000"
+                android:text="@string/cloth_form"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -313,7 +319,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Items">
+                    android:hint="@string/Items">
 
                     <AutoCompleteTextView
                         android:id="@+id/itemsDropdown"
@@ -329,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="Preference">
+                    android:hint="@string/Preference">
 
                     <AutoCompleteTextView
                         android:id="@+id/preferenceDropdown"
@@ -339,26 +345,27 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <!-- Spacing to ensure content doesn't get cut off by the button -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="80dp" />
-
         </LinearLayout>
+
+
     </ScrollView>
 
+
     <!-- Recommend Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/recommendButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/bg_btn"
         android:padding="12dp"
-        android:text="Recommend"
+        android:text="@string/recommend"
         android:textAllCaps="false"
-        android:textColor="@color/light_txt_color"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

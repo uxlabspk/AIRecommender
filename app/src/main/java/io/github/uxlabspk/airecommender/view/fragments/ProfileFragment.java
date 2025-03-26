@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Objects;
 
 import io.github.uxlabspk.airecommender.R;
@@ -21,6 +23,8 @@ import io.github.uxlabspk.airecommender.databinding.FragmentProfileBinding;
 import io.github.uxlabspk.airecommender.utils.ConfirmDialog;
 import io.github.uxlabspk.airecommender.utils.ProgressStatus;
 import io.github.uxlabspk.airecommender.view.AccountActivity;
+import io.github.uxlabspk.airecommender.view.EditProfile;
+import io.github.uxlabspk.airecommender.view.FavouriteImagesActivity;
 import io.github.uxlabspk.airecommender.view.IntroductionActivity;
 import io.github.uxlabspk.airecommender.view.LoginActivity;
 import io.github.uxlabspk.airecommender.view.MainActivity;
@@ -48,6 +52,14 @@ public class ProfileFragment extends Fragment {
 
         // observe the changes
         observeChanges();
+
+        // on edit profile
+        binding.editProfile.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), EditProfile.class));
+        });
+
+        // on favourite button clicked
+        binding.favouriteImages.setOnClickListener(view -> startActivity(new Intent(getContext(), FavouriteImagesActivity.class)));
 
         // on logout clicked
         binding.logoutBtn.setOnClickListener(v -> {
@@ -96,6 +108,8 @@ public class ProfileFragment extends Fragment {
         authViewModel.getUserModelLiveData().observe(getViewLifecycleOwner(), user -> {
             binding.userName.setText(user.getUserName());
             binding.userEmail.setText(user.getUserEmail());
+            if (user.getUserAvatar().isEmpty()) binding.userProfilePic.setImageResource(R.drawable.ic_user);
+            else Glide.with(getContext()).load(user.getUserAvatar()).into(binding.userProfilePic);
         });
 
         // getting error data

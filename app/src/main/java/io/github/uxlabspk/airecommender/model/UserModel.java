@@ -6,12 +6,14 @@ public class UserModel {
     private String uid;
     private String userName;
     private String userEmail;
+    private String userAvatar;
 
     // For working with firebase.
     public UserModel() {}
 
-    public UserModel(String uid, String userName, String userEmail) {
+    public UserModel(String uid, String userAvatar, String userName, String userEmail) {
         this.uid = uid;
+        this.userAvatar = userAvatar;
         this.userName = userName;
         this.userEmail = userEmail;
     }
@@ -27,5 +29,9 @@ public class UserModel {
 
     public String getUserEmail() {
         return userEmail;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
     }
 }

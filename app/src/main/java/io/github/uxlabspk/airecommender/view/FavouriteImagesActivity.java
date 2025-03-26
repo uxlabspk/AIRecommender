@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.github.uxlabspk.airecommender.databinding.ActivityFavouriteImagesBinding;
 import io.github.uxlabspk.airecommender.model.ImageModel;
+import io.github.uxlabspk.airecommender.utils.ProgressStatus;
 import io.github.uxlabspk.airecommender.view.Adapters.ImageAdapter;
 import io.github.uxlabspk.airecommender.viewmodel.FavouriteImagesViewModel;
 
@@ -21,6 +22,7 @@ public class FavouriteImagesActivity extends AppCompatActivity {
     private ImageAdapter imageAdapter;
     private List<ImageModel> imageList;
     private FavouriteImagesViewModel viewModel;
+    private ProgressStatus progressStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,17 @@ public class FavouriteImagesActivity extends AppCompatActivity {
     }
 
     private void init() {
+        // initializing the progress status
+        progressStatus = new ProgressStatus(this);
+        progressStatus.setTitle("Loading Images...");
+        progressStatus.setCanceledOnTouchOutside(false);
+        progressStatus.show();
+
         // initializing the view model
         viewModel = new ViewModelProvider(this).get(FavouriteImagesViewModel.class);
+
+        // go back button
+        binding.goBack.setOnClickListener(view -> finish());
 
         // Setting up the Recycler View
         binding.favouriteImagesRv.setLayoutManager(new LinearLayoutManager(this));
@@ -50,9 +61,9 @@ public class FavouriteImagesActivity extends AppCompatActivity {
             if (images != null) {
                 imageList.clear();
                 imageList.addAll(images);
+                binding.noRecordsFoundLayout.setVisibility(View.GONE);
+                progressStatus.dismiss();
                 imageAdapter.notifyDataSetChanged();
-            } else {
-                binding.noRecordsFoundLayout.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -59,4 +59,5 @@
     <string name="update_profile">Update Profile</string>
     <string name="no_favourite_images">Nothing here</string>
     <string name="no_favourite_images_found">No favourite images found.</string>
+    <string name="favourite_images_text">Favourite Images</string>
 </resources>

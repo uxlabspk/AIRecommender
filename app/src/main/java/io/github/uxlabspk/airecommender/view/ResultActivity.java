@@ -2,15 +2,20 @@ package io.github.uxlabspk.airecommender.view;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 
@@ -19,9 +24,13 @@ import java.io.OutputStream;
 
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityResultBinding;
+import io.github.uxlabspk.airecommender.viewmodel.AuthViewModel;
+import io.github.uxlabspk.airecommender.viewmodel.FavouriteImagesViewModel;
 
 public class ResultActivity extends AppCompatActivity {
-    ActivityResultBinding binding;
+    private ActivityResultBinding binding;
+    private FavouriteImagesViewModel favouriteImagesViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,12 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void init() {
+        // initialize the view model
+        favouriteImagesViewModel = new ViewModelProvider(this).get(FavouriteImagesViewModel.class);
+
+        // observe the changes
+        observe();
+
         // go back clicked
         binding.goBack.setOnClickListener(view -> finish());
 
@@ -53,6 +68,18 @@ public class ResultActivity extends AppCompatActivity {
         // on favourite button clicked
         binding.favouriteButton.setOnClickListener(view -> {
             binding.favouriteButton.setImageDrawable(getDrawable(R.drawable.ic_filled_heart));
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                binding.favouriteButton.setVisibility(View.GONE);
+            }, 3000);
+            favouriteImagesViewModel.saveImage(imagePath);
+        });
+    }
+
+    private void observe() {
+        favouriteImagesViewModel.getMessage().observe(this, message -> {
+            if (message != null) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

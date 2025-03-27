@@ -9,6 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tint="@color/light_txt_color"
         app:cardCornerRadius="12dp">
 
         <LinearLayout
@@ -39,7 +40,8 @@
                     android:layout_marginEnd="20dp"
                     android:contentDescription="@string/logo_placeholder"
                     android:padding="8dp"
-                    android:src="@drawable/ic_download" />
+                    android:src="@drawable/ic_download"
+                    app:tint="@color/light_txt_color" />
 
                 <ImageView
                     android:id="@+id/deleteBtn"
@@ -47,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/logo_placeholder"
                     android:padding="8dp"
+                    app:tint="@color/light_txt_color"
                     android:src="@drawable/ic_delete" />
 
             </LinearLayout>

@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -138,6 +139,52 @@ public class AuthRepository {
                 });
     }
 
+    // update user information
+    public void updateUser(Uri imagePath, String userName, String userEmail) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+
+            // update the user name on firebase database and authentication
+
+            user.verifyBeforeUpdateEmail(userEmail)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d("Update", "updateUser: Verify Email Sent");
+                        } else {
+                            // Critical: Get the specific error
+                            Exception exception = task.getException();
+                            if (exception != null) {
+                                Log.e("Update", "Email verification failed", exception);
+                                // Optionally, show error to user
+                                // Toast.makeText(context, "Verification failed: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+            // Objects.requireNonNull(firebaseAuth.getCurrentUser()).updateEmail(userEmail);
+            databaseReference.child("Users").child(user.getUid()).child("userEmail").setValue(userEmail);
+            databaseReference.child("Users").child(user.getUid()).child("userName").setValue(userName);
+
+
+            // update the user image on firebase storage
+            if (imagePath != null) {
+                StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + user.getUid());
+                ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> {
+                    ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        UserModel userModel = new UserModel(user.getUid(), uri.toString(), userName, userEmail);
+                        databaseReference.child("Users").child(user.getUid()).setValue(userModel);
+                        userLiveData.setValue(user);
+                    });
+                });
+            }
+
+            successLiveData.setValue("Profile updated successfully");
+        } else {
+            Log.e("Firebase", "No authenticated user found.");
+        }
+    }
+
     // logout user
     public void logoutUser() {
         firebaseAuth.signOut();
@@ -179,8 +226,8 @@ public class AuthRepository {
             });
         });
     }
-
     // Getter
+
     public LiveData<FirebaseUser> getUserLiveData() {
         return  userLiveData;
     }
@@ -196,5 +243,4 @@ public class AuthRepository {
     public LiveData<UserModel> getUserModelLiveData() {
         return userModelLiveData;
     }
-
 }

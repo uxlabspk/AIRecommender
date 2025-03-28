@@ -43,6 +43,12 @@ public class ProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        observeChanges();
+    }
+
     private void init() {
         // initializing the viewmodel
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);

@@ -140,30 +140,30 @@ public class AuthRepository {
     }
 
     // update user information
-    public void updateUser(Uri imagePath, String userName, String userEmail) {
+    public void updateUser(Uri imagePath, String userName) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
 
             // update the user name on firebase database and authentication
 
-            user.verifyBeforeUpdateEmail(userEmail)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Log.d("Update", "updateUser: Verify Email Sent");
-                        } else {
-                            // Critical: Get the specific error
-                            Exception exception = task.getException();
-                            if (exception != null) {
-                                Log.e("Update", "Email verification failed", exception);
-                                // Optionally, show error to user
-                                // Toast.makeText(context, "Verification failed: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+//            user.verifyBeforeUpdateEmail(userEmail)
+//                    .addOnCompleteListener(task -> {
+//                        if (task.isSuccessful()) {
+//                            Log.d("Update", "updateUser: Verify Email Sent");
+//                        } else {
+//                            // Critical: Get the specific error
+//                            Exception exception = task.getException();
+//                            if (exception != null) {
+//                                Log.e("Update", "Email verification failed", exception);
+//                                // Optionally, show error to user
+//                                // Toast.makeText(context, "Verification failed: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
 
             // Objects.requireNonNull(firebaseAuth.getCurrentUser()).updateEmail(userEmail);
-            databaseReference.child("Users").child(user.getUid()).child("userEmail").setValue(userEmail);
+//            databaseReference.child("Users").child(user.getUid()).child("userEmail").setValue(userEmail);
             databaseReference.child("Users").child(user.getUid()).child("userName").setValue(userName);
 
 
@@ -172,7 +172,7 @@ public class AuthRepository {
                 StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + user.getUid());
                 ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> {
                     ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        UserModel userModel = new UserModel(user.getUid(), uri.toString(), userName, userEmail);
+                        UserModel userModel = new UserModel(user.getUid(), uri.toString(), userName, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
                         databaseReference.child("Users").child(user.getUid()).setValue(userModel);
                         userLiveData.setValue(user);
                     });

@@ -34,8 +34,8 @@ public class AuthViewModel extends ViewModel {
         authRepository.continueWithGoogle(authCredential);
     }
 
-    public void updateUser(Uri imagePath, String userName, String userEmail) {
-        authRepository.updateUser(imagePath, userName, userEmail);
+    public void updateUser(Uri imagePath, String userName) {
+        authRepository.updateUser(imagePath, userName);
     }
 
     public void logoutUser() {

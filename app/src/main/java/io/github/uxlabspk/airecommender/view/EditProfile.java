@@ -77,13 +77,14 @@ public class EditProfile extends AppCompatActivity {
     private void updateProfile() {
         progressStatus.show();
         Log.d("URI", "updateProfile: " + filePath);
-        authViewModel.updateUser(filePath, binding.userName.getText().toString(), binding.userEmail.getText().toString());
+//        authViewModel.updateUser(filePath, binding.userName.getText().toString(), binding.userEmail.getText().toString());
+        authViewModel.updateUser(filePath, binding.userName.getText().toString());
     }
 
     private void observer() {
         authViewModel.getUserModelLiveData().observe(this, user -> {
             binding.userName.setText(user.getUserName());
-            binding.userEmail.setText(user.getUserEmail());
+            //binding.userEmail.setText(user.getUserEmail());
             if (user.getUserAvatar().isEmpty()) binding.profilePic.setImageResource(R.drawable.ic_user);
             else Glide.with(this).load(user.getUserAvatar()).into(binding.profilePic);
         });

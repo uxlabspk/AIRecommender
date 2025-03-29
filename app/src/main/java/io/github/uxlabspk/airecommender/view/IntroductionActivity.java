@@ -2,18 +2,12 @@ package io.github.uxlabspk.airecommender.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityIntroductionBinding;
 
 public class IntroductionActivity extends AppCompatActivity {
@@ -42,8 +36,6 @@ public class IntroductionActivity extends AppCompatActivity {
 
 
         // Getting started
-        binding.getStartedBtn.setOnClickListener(v -> {
-            startActivity(new Intent(IntroductionActivity.this, AccountActivity.class));
-        });
+        binding.getStartedBtn.setOnClickListener(v -> startActivity(new Intent(IntroductionActivity.this, AccountActivity.class)));
     }
 }

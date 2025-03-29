@@ -77,7 +77,7 @@ public class MakeupActivity extends AppCompatActivity {
 
         // Disable the button and show loading text
         binding.recommendButton.setEnabled(false);
-        binding.recommendButton.setText("Generating recommendation...");
+        binding.recommendButton.setText(R.string.generating_recommendation);
 
         String jsonRequest = "{ \"inputs\": \"" + prompt + "\" }";
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonRequest);
@@ -88,7 +88,7 @@ public class MakeupActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 binding.recommendButton.setEnabled(true);
-                binding.recommendButton.setText("Recommend");
+                binding.recommendButton.setText(R.string.recommend);
 
                 if (response.isSuccessful() && response.body() != null) {
                     try {
@@ -127,7 +127,7 @@ public class MakeupActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 binding.recommendButton.setEnabled(true);
-                binding.recommendButton.setText("Recommend");
+                binding.recommendButton.setText(R.string.recommend);
                 Log.e("API_ERROR", "Request failed: " + t.getMessage());
                 Toast.makeText(MakeupActivity.this, "Network error. Please try again", Toast.LENGTH_SHORT).show();
             }

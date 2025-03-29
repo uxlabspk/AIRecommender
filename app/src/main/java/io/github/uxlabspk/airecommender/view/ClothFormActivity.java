@@ -91,7 +91,7 @@ public class ClothFormActivity extends AppCompatActivity {
 
         // Show loading indicator
         binding.recommendButton.setEnabled(false);
-        binding.recommendButton.setText("Generating recommendation...");
+        binding.recommendButton.setText(R.string.generating_recommendation);
 
         // Create JSON request body
         String jsonRequest = "{ \"inputs\": \"" + prompt + "\" }";
@@ -103,7 +103,7 @@ public class ClothFormActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 binding.recommendButton.setEnabled(true);
-                binding.recommendButton.setText("Recommend");
+                binding.recommendButton.setText(R.string.recommend);
 
                 if (response.isSuccessful() && response.body() != null) {
                     // Convert ResponseBody to an Image
@@ -144,7 +144,7 @@ public class ClothFormActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 binding.recommendButton.setEnabled(true);
-                binding.recommendButton.setText("Recommend");
+                binding.recommendButton.setText(R.string.recommend);
                 Log.e("API_ERROR", "Request failed: " + t.getMessage());
                 Toast.makeText(ClothFormActivity.this, "Network error. Please try again", Toast.LENGTH_SHORT).show();
             }
@@ -173,24 +173,6 @@ public class ClothFormActivity extends AppCompatActivity {
                                String fitType, String height, String weight, String size,
                                String style, String colors, String fabric, String occasionType,
                                String items, String preference) {
-
-        // Generate a personalized outfit recommendation for
-        // a female, aged 25,  with an hourglass body type,
-        // 5'6'' tall, and weighing 60kg.
-        // The outfit should  be in a casual chic style,
-        // featuring pastel colors, made
-        // from cotton material,  and
-        // suitable for work occasions. Focus on tops,
-        // pants, and shoes, ensuring they fit  slim
-        // fit preferences. Take into account
-        // cultural influences from Islamic,
-        // incorporating  traditional or modern elements as per
-        // the user's preference. The person prefers
-        // eco-friendly  clothing, keeping within a
-        // budget of $100-$200. Provide a detailed
-        // description of the outfit,  including
-        // accessories and footwear, ensuring the
-        // recommendation is both practical and stylish.
 
         return "Generate a personalized outfit recommendation for a "
                 + gender
@@ -252,7 +234,7 @@ public class ClothFormActivity extends AppCompatActivity {
     }
 
     private void setupFitTypeDropdown() {
-        String[] items = new String[]{"Slim Fit", "Regular Fit", "Relaxed Fit", "Oversized"};
+        String[] items = new String[]{"Slim Fit", "Regular Fit", "Relaxed Fit", "Oversize"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.dropdown_item, items);
         binding.fitTypeDropdown.setAdapter(adapter);

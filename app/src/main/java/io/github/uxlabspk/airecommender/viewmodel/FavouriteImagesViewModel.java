@@ -2,11 +2,9 @@ package io.github.uxlabspk.airecommender.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import io.github.uxlabspk.airecommender.model.ImageModel;
 import io.github.uxlabspk.airecommender.repository.FavouriteImageRepository;
 

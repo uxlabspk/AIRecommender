@@ -7,20 +7,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.Objects;
 
 import io.github.uxlabspk.airecommender.R;
-import io.github.uxlabspk.airecommender.databinding.ConfirmDialogLayoutBinding;
 
 public class ConfirmDialog {
     private final Dialog dialog;
-    private ImageView dialog_logo;
     private TextView dialog_headline;
     private TextView dialog_body;
     private Button yes_btn;
@@ -41,11 +35,10 @@ public class ConfirmDialog {
     }
 
     private void findViews() {
-        dialog_logo = (ImageView) dialog.findViewById(R.id.dialog_logo);
-        dialog_headline = (TextView) dialog.findViewById(R.id.dialog_headline);
-        dialog_body = (TextView) dialog.findViewById(R.id.dialog_body);
-        yes_btn = (Button) dialog.findViewById(R.id.yes_btn);
-        no_btn = (Button) dialog.findViewById(R.id.no_btn);
+        dialog_headline = dialog.findViewById(R.id.dialog_headline);
+        dialog_body = dialog.findViewById(R.id.dialog_body);
+        yes_btn = dialog.findViewById(R.id.yes_btn);
+        no_btn = dialog.findViewById(R.id.no_btn);
     }
 
     public void show() {

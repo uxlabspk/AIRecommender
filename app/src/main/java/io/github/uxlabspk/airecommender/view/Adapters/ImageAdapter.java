@@ -28,6 +28,8 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
+
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.model.ImageModel;
 
@@ -53,9 +55,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         Glide.with(context).load(imageList.get(position).getImageUrl()).into(holder.imageView);
 
         // on download button click
-        holder.downloadBtn.setOnClickListener(view -> {
-            saveImageToGalleryModern(imageList.get(position).getImageUrl());
-        });
+        holder.downloadBtn.setOnClickListener(view -> saveImageToGalleryModern(imageList.get(position).getImageUrl()));
 
         // delete the image
         holder.deleteBtn.setOnClickListener(view -> {
@@ -99,7 +99,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show();
         }
     }
@@ -115,7 +114,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" +  fileName);
+        StorageReference storageRef = storage.getReference().child("images/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() + "/" +  fileName);
 
         storageRef.delete().addOnCompleteListener(task -> {
            if (task.isComplete()) {

@@ -71,4 +71,5 @@
     <string name="shades">Shades</string>
     <string name="accessories">Accessories</string>
     <string name="makeupAccessories">Makeup Accessories</string>
+    <string name="generating_recommendation">Generating recommendation...</string>
 </resources>

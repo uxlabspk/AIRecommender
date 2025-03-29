@@ -2,11 +2,6 @@ package io.github.uxlabspk.airecommender.view.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -14,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import java.util.Objects;
+import com.bumptech.glide.Glide;
 
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.FragmentProfileBinding;
@@ -25,9 +22,6 @@ import io.github.uxlabspk.airecommender.utils.ProgressStatus;
 import io.github.uxlabspk.airecommender.view.AccountActivity;
 import io.github.uxlabspk.airecommender.view.EditProfile;
 import io.github.uxlabspk.airecommender.view.FavouriteImagesActivity;
-import io.github.uxlabspk.airecommender.view.IntroductionActivity;
-import io.github.uxlabspk.airecommender.view.LoginActivity;
-import io.github.uxlabspk.airecommender.view.MainActivity;
 import io.github.uxlabspk.airecommender.viewmodel.AuthViewModel;
 
 public class ProfileFragment extends Fragment {
@@ -43,6 +37,12 @@ public class ProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        observeChanges();
+    }
+
     private void init() {
         // initializing the viewmodel
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
@@ -54,9 +54,7 @@ public class ProfileFragment extends Fragment {
         observeChanges();
 
         // on edit profile
-        binding.editProfile.setOnClickListener(view -> {
-            startActivity(new Intent(getContext(), EditProfile.class));
-        });
+        binding.editProfile.setOnClickListener(view -> startActivity(new Intent(getContext(), EditProfile.class)));
 
         // on favourite button clicked
         binding.favouriteImages.setOnClickListener(view -> startActivity(new Intent(getContext(), FavouriteImagesActivity.class)));
@@ -96,9 +94,7 @@ public class ProfileFragment extends Fragment {
             });
 
             // on dialog cancel button clicked
-            confirmDialog.getNoButton().setOnClickListener(v2 -> {
-                confirmDialog.dismiss();
-            });
+            confirmDialog.getNoButton().setOnClickListener(v2 -> confirmDialog.dismiss());
 
             confirmDialog.show();
         });
@@ -109,7 +105,7 @@ public class ProfileFragment extends Fragment {
             binding.userName.setText(user.getUserName());
             binding.userEmail.setText(user.getUserEmail());
             if (user.getUserAvatar().isEmpty()) binding.userProfilePic.setImageResource(R.drawable.ic_user);
-            else Glide.with(getContext()).load(user.getUserAvatar()).into(binding.userProfilePic);
+            else Glide.with(requireContext()).load(user.getUserAvatar()).into(binding.userProfilePic);
         });
 
         // getting error data

@@ -1,18 +1,13 @@
-    package io.github.uxlabspk.airecommender.view;
+package io.github.uxlabspk.airecommender.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.common.api.ApiException;
-import com.google.firebase.auth.FirebaseUser;
-
 import io.github.uxlabspk.airecommender.databinding.ActivityLoginBinding;
-import io.github.uxlabspk.airecommender.utils.ConfirmDialog;
 import io.github.uxlabspk.airecommender.utils.ProgressStatus;
 import io.github.uxlabspk.airecommender.viewmodel.AuthViewModel;
 
@@ -41,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         ps.setCanceledOnTouchOutside(true);
 
         // goBack button
-        binding.goBack.setOnClickListener(v -> onBackPressed());
+        binding.goBack.setOnClickListener(v -> finish());
 
         // on forget password click
         binding.resetPassword.setOnClickListener(v -> {
@@ -53,9 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // on login
-        binding.loginButton.setOnClickListener(v -> {
-            authenticateUser(binding.signinUserEmail.getText().toString(), binding.signinUserPassword.getText().toString());
-        });
+        binding.loginButton.setOnClickListener(v -> authenticateUser(binding.signinUserEmail.getText().toString(), binding.signinUserPassword.getText().toString()));
 
         // create account link
         binding.createAccountLink.setOnClickListener(v -> startActivity(new Intent(this, SignupActivity.class)));

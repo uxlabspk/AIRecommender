@@ -2,7 +2,6 @@ package io.github.uxlabspk.airecommender.view;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -24,7 +23,6 @@ import java.io.OutputStream;
 
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityResultBinding;
-import io.github.uxlabspk.airecommender.viewmodel.AuthViewModel;
 import io.github.uxlabspk.airecommender.viewmodel.FavouriteImagesViewModel;
 
 public class ResultActivity extends AppCompatActivity {
@@ -68,9 +66,7 @@ public class ResultActivity extends AppCompatActivity {
         // on favourite button clicked
         binding.favouriteButton.setOnClickListener(view -> {
             binding.favouriteButton.setImageDrawable(getDrawable(R.drawable.ic_filled_heart));
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                binding.favouriteButton.setVisibility(View.GONE);
-            }, 3000);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> binding.favouriteButton.setVisibility(View.GONE), 3000);
             favouriteImagesViewModel.saveImage(imagePath);
         });
     }
@@ -117,7 +113,6 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
         }
     }

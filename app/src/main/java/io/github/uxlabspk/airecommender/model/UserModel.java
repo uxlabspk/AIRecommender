@@ -18,11 +18,6 @@ public class UserModel {
         this.userEmail = userEmail;
     }
 
-    // Getters
-    public String getUid() {
-        return uid;
-    }
-
     public String getUserName() {
         return userName;
     }

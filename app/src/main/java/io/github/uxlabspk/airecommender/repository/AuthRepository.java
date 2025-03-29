@@ -19,7 +19,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 import io.github.uxlabspk.airecommender.model.UserModel;
 
@@ -43,73 +42,65 @@ public class AuthRepository {
 
     // SignUp With Email and Password
     public void registerUser(Uri imagePath, String name, String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                   if (task.isSuccessful()) {
-                       FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                       assert firebaseUser != null;
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                assert firebaseUser != null;
 
-                       if (imagePath != null) {
-                           StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + firebaseAuth.getCurrentUser().getUid());
-                           ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> {
-                               ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                                   UserModel userModel = new UserModel(firebaseUser.getUid(), uri.toString(), name, email);
-                                   databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
-                                   userLiveData.setValue(firebaseUser);
-                               });
-                           }).addOnFailureListener(failure -> {
-                               errorLiveData.setValue(failure.getMessage());
-                           });
-                       } else {
-                           UserModel userModel = new UserModel(firebaseUser.getUid(), "", name, email);
-                           databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
-                           userLiveData.setValue(firebaseUser);
-                       }
+                if (imagePath != null) {
+                    StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + firebaseAuth.getCurrentUser().getUid());
+                    ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        UserModel userModel = new UserModel(firebaseUser.getUid(), uri.toString(), name, email);
+                        databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
+                        userLiveData.setValue(firebaseUser);
+                    })).addOnFailureListener(failure -> errorLiveData.setValue(failure.getMessage()));
+                } else {
+                    UserModel userModel = new UserModel(firebaseUser.getUid(), "", name, email);
+                    databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
+                    userLiveData.setValue(firebaseUser);
+                }
 
-                   } else {
-                       errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
-                   }
-                });
+            } else {
+                errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
+            }
+        });
     }
 
     // Login with Email and Password
     public void loginUser(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                   if (task.isSuccessful()) {
-                       userLiveData.setValue(firebaseAuth.getCurrentUser());
-                   } else {
-                       errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
-                   }
-                });
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                userLiveData.setValue(firebaseAuth.getCurrentUser());
+            } else {
+                errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
+            }
+        });
     }
 
     // Continue with google
     public void continueWithGoogle(AuthCredential authCredential) {
-        firebaseAuth.signInWithCredential(authCredential)
-                .addOnCompleteListener(task -> {
-                   if (task.isSuccessful()) {
-                       FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                       if (firebaseUser != null) {
-                           databaseReference.child(firebaseUser.getUid()).setValue(new UserModel(firebaseUser.getUid(), Objects.requireNonNull(firebaseUser.getPhotoUrl()).toString(), firebaseUser.getDisplayName(), firebaseUser.getEmail()));
-                           userLiveData.setValue(firebaseUser);
-                       }
-                   } else {
-                       errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
-                   }
-                });
+        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    databaseReference.child(firebaseUser.getUid()).setValue(new UserModel(firebaseUser.getUid(), Objects.requireNonNull(firebaseUser.getPhotoUrl()).toString(), firebaseUser.getDisplayName(), firebaseUser.getEmail()));
+                    userLiveData.setValue(firebaseUser);
+                }
+            } else {
+                errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
+            }
+        });
     }
 
     // reset password
     public void resetPasswordRequest(String email) {
-        firebaseAuth.sendPasswordResetEmail(email)
-                .addOnCompleteListener(resetTask -> {
-                    if (resetTask.isSuccessful()) {
-                        successLiveData.setValue("Reset link sent to your email.");
-                    } else {
-                        errorLiveData.setValue(Objects.requireNonNull(resetTask.getException()).getMessage());
-                    }
-                });
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(resetTask -> {
+            if (resetTask.isSuccessful()) {
+                successLiveData.setValue("Reset link sent to your email.");
+            } else {
+                errorLiveData.setValue(Objects.requireNonNull(resetTask.getException()).getMessage());
+            }
+        });
     }
 
     // fetch user Information
@@ -119,23 +110,46 @@ public class AuthRepository {
             return;
         }
 
-        databaseReference.child("Users").child(firebaseAuth.getCurrentUser().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        UserModel userModel = snapshot.getValue(UserModel.class);
-                        if (userModel != null) {
-                            userModelLiveData.setValue(userModel);
-                        } else {
-                            errorLiveData.setValue("User data not found");
-                        }
-                    }
+        databaseReference.child("Users").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel userModel = snapshot.getValue(UserModel.class);
+                if (userModel != null) {
+                    userModelLiveData.setValue(userModel);
+                } else {
+                    errorLiveData.setValue("User data not found");
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        errorLiveData.setValue(error.getMessage());
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                errorLiveData.setValue(error.getMessage());
+            }
+        });
+    }
+
+    // update user information
+    public void updateUser(Uri imagePath, String userName) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            // Updating User Name in database
+            databaseReference.child("Users").child(user.getUid()).child("userName").setValue(userName);
+
+            // update the user image on firebase storage
+            if (imagePath != null) {
+                StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + user.getUid());
+                ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                    UserModel userModel = new UserModel(user.getUid(), uri.toString(), userName, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
+                    databaseReference.child("Users").child(user.getUid()).setValue(userModel);
+                    userLiveData.setValue(user);
+                }));
+            }
+
+            successLiveData.setValue("Profile updated successfully");
+        } else {
+            Log.e("Firebase", "No authenticated user found.");
+        }
     }
 
     // logout user
@@ -154,23 +168,23 @@ public class AuthRepository {
             if (task.isSuccessful()) {
                 Log.d("TAG", "User image deleted successfully");
             } else {
-                Log.d("TAG", "No image found or failed to delete image: " + task.getException().getMessage());
+                Log.d("TAG", "No image found or failed to delete image: " + Objects.requireNonNull(task.getException()).getMessage());
             }
 
             // Step 2: Delete the user's data from Realtime Database
-            databaseReference.child(firebaseAuth.getUid()).removeValue().addOnCompleteListener(dbTask -> {
+            databaseReference.child(Objects.requireNonNull(firebaseAuth.getUid())).removeValue().addOnCompleteListener(dbTask -> {
                 if (dbTask.isSuccessful()) {
                     Log.d("TAG", "User database entry deleted successfully");
                 } else {
-                    Log.d("TAG", "Failed to delete user database entry: " + dbTask.getException().getMessage());
+                    Log.d("TAG", "Failed to delete user database entry: " + Objects.requireNonNull(dbTask.getException()).getMessage());
                 }
 
                 // Step 3: Delete the user from Firebase Authentication
-                firebaseAuth.getCurrentUser().delete().addOnCompleteListener(authTask -> {
+                Objects.requireNonNull(firebaseAuth.getCurrentUser()).delete().addOnCompleteListener(authTask -> {
                     if (authTask.isSuccessful()) {
                         Log.d("TAG", "User deleted successfully from Authentication");
                     } else {
-                        Log.d("TAG", "Failed to delete user: " + authTask.getException().getMessage());
+                        Log.d("TAG", "Failed to delete user: " + Objects.requireNonNull(authTask.getException()).getMessage());
                         if (authTask.getException() != null) {
                             Log.d("TAG", "User needs to re-authenticate before deleting.");
                         }
@@ -179,22 +193,21 @@ public class AuthRepository {
             });
         });
     }
-
     // Getter
+
     public LiveData<FirebaseUser> getUserLiveData() {
-        return  userLiveData;
+        return userLiveData;
     }
 
     public LiveData<String> getErrorLiveData() {
         return errorLiveData;
     }
 
-    public LiveData<String>  getSuccessLiveData() {
+    public LiveData<String> getSuccessLiveData() {
         return successLiveData;
     }
 
     public LiveData<UserModel> getUserModelLiveData() {
         return userModelLiveData;
     }
-
 }

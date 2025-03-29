@@ -11,14 +11,13 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.github.uxlabspk.airecommender.model.ImageModel;
 
 public class FavouriteImageRepository {
     private final MutableLiveData<String> message = new MutableLiveData<>();
     private final MutableLiveData<List<ImageModel>> imageLiveData = new MutableLiveData<>();
-//    private final FirebaseStorage storage = FirebaseStorage.getInstance();
-//    private final StorageReference storageRef = storage.getReference().child("images/").child("favourite/");
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     // constructor
@@ -32,26 +31,17 @@ public class FavouriteImageRepository {
         Uri fileUri = Uri.fromFile(file);
 
         // Get Firebase Storage reference
-        StorageReference storageRef = storage.getReference().child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + file.getName());
+        StorageReference storageRef = storage.getReference().child("images/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() + "/" + file.getName());
 
         // Upload the file
         storageRef.putFile(fileUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    message.setValue("Upload successful!");
-
-                    // Get download URL
-//                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-//                        String downloadUrl = uri.toString();
-//                    });
-                })
-                .addOnFailureListener(e -> {
-                    message.setValue("Upload failed: " + e.getMessage());
-                });
+                .addOnSuccessListener(taskSnapshot -> message.setValue("Upload successful!"))
+                .addOnFailureListener(e -> message.setValue("Upload failed: " + e.getMessage()));
     }
 
     // loading the image
     private void loadImages() {
-        StorageReference storageRef = storage.getReference().child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/");
+        StorageReference storageRef = storage.getReference().child("images/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() + "/");
 
         storageRef.listAll()
                 .addOnSuccessListener(listResult -> {

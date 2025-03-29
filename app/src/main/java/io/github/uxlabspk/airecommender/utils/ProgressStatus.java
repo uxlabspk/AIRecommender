@@ -36,8 +36,8 @@ public class ProgressStatus {
     }
 
     private void findViews() {
-        loadingIcon = (ImageView) dialog.findViewById(R.id.loadingIcon);
-        loadingText = (TextView) dialog.findViewById(R.id.loadingText);
+        loadingIcon = dialog.findViewById(R.id.loadingIcon);
+        loadingText = dialog.findViewById(R.id.loadingText);
     }
 
     public void setTitle(String title) {

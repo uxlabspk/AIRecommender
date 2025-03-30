@@ -48,6 +48,9 @@ public class ResultActivity extends AppCompatActivity {
         // go back clicked
         binding.goBack.setOnClickListener(view -> finish());
 
+        // setting the prompt under image
+        binding.noticeText.setText(getIntent().getStringExtra("prompt"));
+
         // loading the image
         String imagePath = getIntent().getStringExtra("image_path");
         if (imagePath != null) {

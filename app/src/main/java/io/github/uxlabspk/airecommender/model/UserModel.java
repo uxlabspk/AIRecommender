@@ -18,6 +18,10 @@ public class UserModel {
         this.userEmail = userEmail;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public String getUserName() {
         return userName;
     }

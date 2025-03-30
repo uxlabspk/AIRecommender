@@ -45,19 +45,20 @@ public class FavouriteImageRepository {
 
         storageRef.listAll()
                 .addOnSuccessListener(listResult -> {
+                    if (listResult.getItems().isEmpty()) {
+                        message.setValue("Not Found");
+                    }
                     List<ImageModel> imageList = new ArrayList<>();
                     for (StorageReference fileRef : listResult.getItems()) {
                         fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                             if (uri != null) {
                                 imageList.add(new ImageModel(uri.toString()));
                                 imageLiveData.setValue(imageList); // Update LiveData after each fetch
-                            } else {
-                                imageLiveData.setValue(null);
                             }
                         });
                     }
                 })
-                .addOnFailureListener(e -> imageLiveData.setValue(null));
+                .addOnFailureListener(e -> message.setValue(e.getMessage()));
     }
 
     public MutableLiveData<List<ImageModel>> getImageLiveData() {

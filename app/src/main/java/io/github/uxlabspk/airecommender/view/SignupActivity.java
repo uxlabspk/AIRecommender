@@ -37,7 +37,7 @@ public class SignupActivity extends AppCompatActivity {
 
         // Ready the progress status
         ps = new ProgressStatus(this);
-        ps.setTitle("Authenticating...");
+        ps.setTitle("Creating Account...");
         ps.setCanceledOnTouchOutside(true);
 
         // go back listener
@@ -97,7 +97,7 @@ public class SignupActivity extends AppCompatActivity {
             binding.nameLayout.setError("Invalid Username");
         } else {
             // removing errors
-            binding.editTextNameAddress.setError("");
+            binding.nameLayout.setError("");
             binding.emailLayout.setError("");
             binding.passwordLayout.setError("");
 

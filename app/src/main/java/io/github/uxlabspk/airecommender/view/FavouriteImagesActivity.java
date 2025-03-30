@@ -2,6 +2,7 @@ package io.github.uxlabspk.airecommender.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -64,6 +65,12 @@ public class FavouriteImagesActivity extends AppCompatActivity {
                 binding.noRecordsFoundLayout.setVisibility(View.GONE);
                 progressStatus.dismiss();
                 imageAdapter.notifyDataSetChanged();
+            }
+        });
+
+        viewModel.getMessage().observe(this, msg -> {
+            if (msg != null) {
+                progressStatus.dismiss();
             }
         });
     }

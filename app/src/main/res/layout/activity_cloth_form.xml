@@ -48,14 +48,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Age Section -->
+            <!-- Age -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ageLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/age">
+                android:hint="@string/age"
+                app:startIconDrawable="@android:drawable/ic_menu_today">
 
                 <AutoCompleteTextView
                     android:id="@+id/ageDropdown"
@@ -64,14 +65,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Gender and Budget Section -->
+            <!-- Gender -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/genderLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/gender">
+                android:hint="@string/gender"
+                app:startIconDrawable="@android:drawable/ic_menu_myplaces">
 
                 <AutoCompleteTextView
                     android:id="@+id/genderDropdown"
@@ -80,13 +81,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Budget -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/budgetLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/budget">
+                android:hint="@string/budget"
+                app:startIconDrawable="@android:drawable/ic_menu_info_details">
 
                 <AutoCompleteTextView
                     android:id="@+id/budgetDropdown"
@@ -106,13 +108,15 @@
                 android:fontFamily="@font/inter_regular"
                 android:textSize="18sp" />
 
+            <!-- Body Type -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bodyTypeLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="@string/body_type">
+                android:hint="@string/body_type"
+                app:startIconDrawable="@android:drawable/ic_menu_manage">
 
                 <AutoCompleteTextView
                     android:id="@+id/bodyTypeDropdown"
@@ -121,13 +125,15 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Fit Type -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fitTypeLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/fitType">
+                android:hint="@string/fitType"
+                app:startIconDrawable="@android:drawable/ic_menu_crop">
 
                 <AutoCompleteTextView
                     android:id="@+id/fitTypeDropdown"
@@ -136,14 +142,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Height, Weight, Size Section -->
+            <!-- Height -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/heightLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/height">
+                android:hint="@string/height"
+                app:startIconDrawable="@android:drawable/ic_menu_sort_by_size">
 
                 <AutoCompleteTextView
                     android:id="@+id/heightDropdown"
@@ -152,13 +158,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Weight -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/weightLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/weight">
+                android:hint="@string/weight"
+                app:startIconDrawable="@android:drawable/ic_menu_agenda">
 
                 <AutoCompleteTextView
                     android:id="@+id/weightDropdown"
@@ -167,13 +174,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Size -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sizeLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/size">
+                android:hint="@string/size"
+                app:startIconDrawable="@android:drawable/ic_menu_zoom">
 
                 <AutoCompleteTextView
                     android:id="@+id/sizeDropdown"
@@ -193,13 +201,14 @@
                 android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
+            <!-- Style -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/styleLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/Style">
+                android:hint="@string/Style"
+                app:startIconDrawable="@android:drawable/ic_menu_view">
 
                 <AutoCompleteTextView
                     android:id="@+id/styleDropdown"
@@ -208,13 +217,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Colors -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/colorsLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/colors">
+                android:hint="@string/colors"
+                app:startIconDrawable="@android:drawable/ic_menu_gallery">
 
                 <AutoCompleteTextView
                     android:id="@+id/colorsDropdown"
@@ -223,13 +233,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Fabric -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fabricLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/fabric">
+                android:hint="@string/fabric"
+                app:startIconDrawable="@android:drawable/ic_menu_upload">
 
                 <AutoCompleteTextView
                     android:id="@+id/fabricDropdown"
@@ -249,13 +260,14 @@
                 android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
+            <!-- Occasion Type -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/occasionTypeLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/occasion_type">
+                android:hint="@string/occasion_type"
+                app:startIconDrawable="@android:drawable/ic_menu_my_calendar">
 
                 <AutoCompleteTextView
                     android:id="@+id/occasionTypeDropdown"
@@ -275,13 +287,14 @@
                 android:textColor="@color/light_txt_color"
                 android:textSize="18sp" />
 
+            <!-- Items -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/itemsLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/Items">
+                android:hint="@string/Items"
+                app:startIconDrawable="@android:drawable/ic_menu_agenda">
 
                 <AutoCompleteTextView
                     android:id="@+id/itemsDropdown"
@@ -290,13 +303,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Preference -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/preferenceLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/Preference">
+                android:hint="@string/Preference"
+                app:startIconDrawable="@android:drawable/ic_menu_preferences">
 
                 <AutoCompleteTextView
                     android:id="@+id/preferenceDropdown"
@@ -306,12 +320,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-
-
     </ScrollView>
 
-
-    <!-- Recommend Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/recommendButton"
         android:layout_width="match_parent"
@@ -324,8 +334,5 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

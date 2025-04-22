@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import io.github.uxlabspk.airecommender.databinding.FragmentHomeBinding;
 import io.github.uxlabspk.airecommender.view.ClothFormActivity;
+import io.github.uxlabspk.airecommender.view.FashionStyleActivity;
 import io.github.uxlabspk.airecommender.view.MakeupActivity;
 
 public class HomeFragment extends Fragment {
@@ -41,6 +42,13 @@ public class HomeFragment extends Fragment {
         binding.makeupForm.setOnClickListener(v -> {
             // Create an Intent to start AnotherActivity
             Intent intent = new Intent(requireContext(), MakeupActivity.class);
+            startActivity(intent);
+        });
+
+        // Set up the click listener using View Binding
+        binding.fashionStyle.setOnClickListener(v -> {
+            // Create an Intent to start AnotherActivity
+            Intent intent = new Intent(requireContext(), FashionStyleActivity.class);
             startActivity(intent);
         });
     }

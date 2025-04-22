@@ -45,7 +45,7 @@
     <string name="body_measur">Body Measurements</string>
     <string name="budget">Budget</string>
     <string name="gender">Gender</string>
-    <string name="age">Age\n</string>
+    <string name="age">Age</string>
     <string name="recomander">Recommender</string>
     <string name="back">Back</string>
     <string name="recommended_cloths">Recommendations</string>
@@ -71,5 +71,13 @@
     <string name="shades">Shades</string>
     <string name="accessories">Accessories</string>
     <string name="makeupAccessories">Makeup Accessories</string>
-    <string name="generating_recommendation">Generating recommendation...</string>
+    <string name="generating_recommendation">Generating recommendation…</string>
+    <string name="complete_style_recommender">Fashion Style</string>
+    <string name="clothing_items">Cloth Items</string>
+    <string name="makeup_item">Makeup Items</string>
+    <string name="makeup_shades">Makeup Shades</string>
+    <string name="lets_go">Let\'s Go</string>
+    <string name="preference_type">Preference</string>
+    <string name="fashion_style">Fashion Style</string>
+
 </resources>

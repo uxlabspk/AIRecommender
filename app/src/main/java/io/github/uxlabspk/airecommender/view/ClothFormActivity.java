@@ -341,7 +341,7 @@ public class ClothFormActivity extends AppCompatActivity {
     }
 
     private void setupItemsDropdown() {
-        String[] items = new String[]{"Shirts", "Pants", "Dresses", "Skirts", "Outerwear", "Accessories"};
+        String[] items = new String[]{"Shirts", "Pants", "Dresses", "Shalwar Qameez", "Skirts", "Outerwear", "Accessories"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.dropdown_item, items);
         binding.itemsDropdown.setAdapter(adapter);

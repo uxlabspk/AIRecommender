@@ -185,57 +185,6 @@ public class MakeupActivity extends AppCompatActivity {
                 }
             }
         });
-
-        // Make API call using HuggingFace API
-//        HuggingFaceApi apiService = RetrofitClient.getApiService();
-//        apiService.generateImage(API_KEY, requestBody).enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-//                binding.recommendButton.setEnabled(true);
-//                binding.recommendButton.setText(R.string.recommend);
-//
-//                if (response.isSuccessful() && response.body() != null) {
-//                    try {
-//                        InputStream inputStream = response.body().byteStream();
-//                        File file = new File(getCacheDir(), "generated_image" + UUID.randomUUID() + ".png");
-//                        OutputStream outputStream = null;
-//                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//                            outputStream = Files.newOutputStream(file.toPath());
-//                        }
-//
-//                        byte[] buffer = new byte[1024];
-//                        int bytesRead;
-//                        while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                            if (outputStream != null)
-//                                outputStream.write(buffer, 0, bytesRead);
-//                        }
-//                        if (outputStream != null)
-//                            outputStream.close();
-//                        inputStream.close();
-//
-//                        Intent intent = new Intent(MakeupActivity.this, ResultActivity.class);
-//                        intent.putExtra("image_path", file.getAbsolutePath());
-//                        intent.putExtra("prompt", prompt);
-//                        startActivity(intent);
-//
-//                    } catch (Exception e) {
-//                        Log.e("API_ERROR", "Error processing image: " + e.getMessage());
-//                        Toast.makeText(MakeupActivity.this, "Error processing image", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    Log.e("API_ERROR", "Response error: " + response.errorBody());
-//                    Toast.makeText(MakeupActivity.this, "Failed to generate recommendation", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-//                binding.recommendButton.setEnabled(true);
-//                binding.recommendButton.setText(R.string.recommend);
-//                Log.e("API_ERROR", "Request failed: " + t.getMessage());
-//                Toast.makeText(MakeupActivity.this, "Network error. Please try again", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     private boolean validateFormInputs() {

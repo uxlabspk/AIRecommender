@@ -1,6 +1,6 @@
 package io.github.uxlabspk.airecommender.view.Adapters;
 
-import android.content.ContentResolver;
+import  android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;

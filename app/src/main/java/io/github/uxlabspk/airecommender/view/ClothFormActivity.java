@@ -1,35 +1,22 @@
 package io.github.uxlabspk.airecommender.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.UUID;
 
 import io.github.uxlabspk.airecommender.BuildConfig;
 import io.github.uxlabspk.airecommender.R;
-import io.github.uxlabspk.airecommender.api.HuggingFaceApi;
-import io.github.uxlabspk.airecommender.api.RetrofitClient;
+import io.github.uxlabspk.airecommender.api.ImageRequest;
 import io.github.uxlabspk.airecommender.databinding.ActivityClothFormBinding;
 import io.github.uxlabspk.airecommender.utils.ProgressStatus;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 
 public class ClothFormActivity extends AppCompatActivity {
@@ -97,8 +84,8 @@ public class ClothFormActivity extends AppCompatActivity {
         binding.recommendButton.setText(R.string.generating_recommendation);
 
         // Create JSON request body
-        String jsonRequest = "{ \"inputs\": \"" + prompt + "\" }";
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonRequest);
+//        String jsonRequest = "{ \"inputs\": \"" + prompt + "\" }";
+//        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonRequest);
 
         // showing the progress status
         ProgressStatus progressStatus = new ProgressStatus(this);
@@ -106,98 +93,46 @@ public class ClothFormActivity extends AppCompatActivity {
         progressStatus.setTitle("Thinking...");
         progressStatus.show();
 
-        HuggingFaceApi apiService = RetrofitClient.getApiService();
-        apiService.generateImage(API_KEY, requestBody).enqueue(new Callback<ResponseBody>() {
-            private static final int MAX_RETRIES = 2;
-            private int retryCount = 0;
 
+        String url = "https://router.huggingface.co/fal-ai/fal-ai/flux-lora";
+        String authToken = API_KEY;
+
+        ImageRequest.fetchImageWithPost(url, prompt, authToken, new ImageRequest.ImageCallback() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                progressStatus.show();
-                binding.recommendButton.setEnabled(true);
-                binding.recommendButton.setText(R.string.recommend);
-
-                if (response.isSuccessful() && response.body() != null) {
-                    // Convert ResponseBody to an Image
+            public void onSuccess(Bitmap image) {
+                runOnUiThread(() -> {
+                    File file = new File(getExternalFilesDir(null), "generated_image" + UUID.randomUUID() + ".jpg");
                     try {
-                        InputStream inputStream = response.body().byteStream();
-                        File file = new File(getCacheDir(), "generated_image" + UUID.randomUUID() + ".png");
-                        OutputStream outputStream = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            outputStream = Files.newOutputStream(file.toPath());
-                        } else {
-                            outputStream = new FileOutputStream(file); // Fallback for older Android versions
-                        }
+                        FileOutputStream out = new FileOutputStream(file);
+                        image.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        out.flush();
+                        out.close();
 
-                        byte[] buffer = new byte[4096]; // Larger buffer for faster transfers
-                        int bytesRead;
-                        while ((bytesRead = inputStream.read(buffer)) != -1) {
-                            outputStream.write(buffer, 0, bytesRead);
-                        }
-
-                        outputStream.close();
-                        inputStream.close();
+                        // stopping progress indicator
+                        progressStatus.dismiss();
 
                         Intent intent = new Intent(ClothFormActivity.this, ResultActivity.class);
                         intent.putExtra("image_path", file.getAbsolutePath());
-                        intent.putExtra("prompt", prompt);  // Pass the prompt to result activity
+                        intent.putExtra("prompt", prompt);
                         startActivity(intent);
                         finish();
-
                     } catch (Exception e) {
-                        Log.e("API_ERROR", "Error processing image: " + e.getMessage());
-                        Toast.makeText(ClothFormActivity.this, "Error processing image", Toast.LENGTH_SHORT).show();
+                        progressStatus.dismiss();
+                        e.printStackTrace();
+                        Toast.makeText(ClothFormActivity.this, "Error saving image", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    int statusCode = response.code();
-                    Log.e("API_ERROR", "Response error: " + statusCode + ", " + response.errorBody());
-
-                    if (statusCode == 429 || statusCode == 503 || statusCode == 504) {
-                        // These status codes indicate server is busy or timeout
-                        retryRequest(call);
-                    } else {
-                        Toast.makeText(ClothFormActivity.this, "Failed to generate recommendation (Error " + statusCode + ")", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                });
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Log.e("API_ERROR", "Request failed: " + t.getMessage());
-
-                if (t instanceof java.io.InterruptedIOException) {
-                    retryRequest(call);
-                } else {
+            public void onError(Exception e) {
+                runOnUiThread(() -> {
                     progressStatus.dismiss();
-                    binding.recommendButton.setEnabled(true);
-                    binding.recommendButton.setText(R.string.recommend);
-                    Toast.makeText(ClothFormActivity.this, "Network error. Please try again", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            private void retryRequest(Call<ResponseBody> call) {
-                if (retryCount < MAX_RETRIES) {
-                    retryCount++;
-                    Log.d("API_RETRY", "Retrying request, attempt " + retryCount);
-
-                    // Show retry message to user
                     Toast.makeText(ClothFormActivity.this,
-                            "Server busy, retrying (" + retryCount + "/" + MAX_RETRIES + ")...",
-                            Toast.LENGTH_SHORT).show();
-
-                    // Exponential backoff - wait longer between each retry
-                    long backoffTime = 1000 * (long)Math.pow(2, retryCount);
-                    new Handler().postDelayed(() -> {
-                        call.clone().enqueue(this);
-                    }, backoffTime);
-                } else {
-                    progressStatus.dismiss();
-                    binding.recommendButton.setEnabled(true);
-                    binding.recommendButton.setText(R.string.recommend);
-                    Toast.makeText(ClothFormActivity.this,
-                            "Server is currently busy. Please try again later.",
+                            "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
-                }
+                });
+                e.printStackTrace();
             }
         });
     }

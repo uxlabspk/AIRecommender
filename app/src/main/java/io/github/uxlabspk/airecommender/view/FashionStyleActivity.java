@@ -1,6 +1,7 @@
 package io.github.uxlabspk.airecommender.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,15 +18,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import io.github.uxlabspk.airecommender.BuildConfig;
 import io.github.uxlabspk.airecommender.R;
-import io.github.uxlabspk.airecommender.api.HuggingFaceApi;
-import io.github.uxlabspk.airecommender.api.RetrofitClient;
+import io.github.uxlabspk.airecommender.api.ImageRequest;
 import io.github.uxlabspk.airecommender.databinding.ActivityFashionStyleBinding;
 import io.github.uxlabspk.airecommender.utils.ProgressStatus;
 import okhttp3.MediaType;
@@ -192,97 +191,45 @@ public class FashionStyleActivity extends AppCompatActivity {
                 binding.accessoriesDropdown.getText()
         );
 
-        // JSON body
-        Gson gson = new Gson();
-        Map<String,String> payload = new HashMap<>();
-        payload.put("inputs", prompt);
-        String json = gson.toJson(payload);
+        String url = "https://router.huggingface.co/fal-ai/fal-ai/flux-lora";
+        String authToken = API_KEY;
 
-        RequestBody body = RequestBody.create(
-                MediaType.parse("application/json"),
-                json
-        );
-
-        // enqueue with retry logic
-        HuggingFaceApi api = RetrofitClient.getApiService();
-        api.generateImage(API_KEY, body).enqueue(new Callback<ResponseBody>() {
-            private static final int MAX_RETRIES = 2;
-            private int retryCount = 0;
-
+        ImageRequest.fetchImageWithPost(url, prompt, authToken, new ImageRequest.ImageCallback() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call,
-                                   @NonNull Response<ResponseBody> resp) {
-                progressStatus.dismiss();
-                binding.recommendButton.setEnabled(true);
-                binding.recommendButton.setText(R.string.recommend);
-
-                if (resp.isSuccessful() && resp.body() != null) {
-                    try (InputStream in = resp.body().byteStream()) {
-                        File outFile = new File(
-                                getExternalFilesDir(null),
-                                "look_" + UUID.randomUUID() + ".png"
-                        );
-                        OutputStream out = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
-                                ? Files.newOutputStream(outFile.toPath())
-                                : new FileOutputStream(outFile);
-
-                        byte[] buf = new byte[4096];
-                        int r;
-                        while ((r = in.read(buf)) > 0) out.write(buf, 0, r);
+            public void onSuccess(Bitmap image) {
+                runOnUiThread(() -> {
+                    File file = new File(getExternalFilesDir(null), "generated_image" + UUID.randomUUID() + ".jpg");
+                    try {
+                        FileOutputStream out = new FileOutputStream(file);
+                        image.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        out.flush();
                         out.close();
 
-                        Intent i = new Intent(FashionStyleActivity.this, ResultActivity.class);
-                        i.putExtra("image_path", outFile.getAbsolutePath());
-                        i.putExtra("prompt", prompt);
-                        startActivity(i);
+                        // stopping progress indicator
+                        progressStatus.dismiss();
+
+                        Intent intent = new Intent(FashionStyleActivity.this, ResultActivity.class);
+                        intent.putExtra("image_path", file.getAbsolutePath());
+                        intent.putExtra("prompt", prompt);
+                        startActivity(intent);
+                        finish();
                     } catch (Exception e) {
-                        Log.e("FashionStyle", "Save failed", e);
-                        Toast.makeText(FashionStyleActivity.this,
-                                "Save failed: " + e.getMessage(),
-                                Toast.LENGTH_LONG).show();
+                        progressStatus.dismiss();
+                        e.printStackTrace();
+                        Toast.makeText(FashionStyleActivity.this, "Error saving image", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    int code = resp.code();
-                    Log.e("FashionStyle", "API error " + code);
-                    if (code == 429 || code == 503 || code == 504) {
-                        retryRequest(call);
-                    } else {
-                        Toast.makeText(FashionStyleActivity.this,
-                                "Failed (Error " + code + ")",
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
+                });
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call,
-                                  @NonNull Throwable t) {
-                progressStatus.dismiss();
-                binding.recommendButton.setEnabled(true);
-                binding.recommendButton.setText(R.string.recommend);
-                Log.e("FashionStyle", "Network error", t);
-                if (t instanceof java.io.InterruptedIOException) {
-                    retryRequest(call);
-                } else {
+            public void onError(Exception e) {
+                runOnUiThread(() -> {
+                    progressStatus.dismiss();
                     Toast.makeText(FashionStyleActivity.this,
-                            "Network error. Please try again.",
+                            "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
-                }
-            }
-
-            private void retryRequest(Call<ResponseBody> call) {
-                if (retryCount < MAX_RETRIES) {
-                    retryCount++;
-                    long backoff = 1000L * (long)Math.pow(2, retryCount);
-                    Toast.makeText(FashionStyleActivity.this,
-                            "Server busy, retrying... (" + retryCount + "/" + MAX_RETRIES + ")",
-                            Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(() -> call.clone().enqueue(this), backoff);
-                } else {
-                    Toast.makeText(FashionStyleActivity.this,
-                            "Server is busy. Try again later.",
-                            Toast.LENGTH_LONG).show();
-                }
+                });
+                e.printStackTrace();
             }
         });
     }

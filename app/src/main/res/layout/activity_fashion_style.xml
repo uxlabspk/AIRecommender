@@ -8,23 +8,25 @@
     android:background="@color/light_bg_color"
     tools:context=".view.FashionStyleActivity">
 
-  <!-- Toolbar -->
+  <!-- Enhanced Toolbar with better elevation and padding -->
   <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:elevation="4dp"
+      android:layout_height="?attr/actionBarSize"
+      android:elevation="8dp"
       android:background="@drawable/bg_toolbar"
+      android:paddingStart="8dp"
+      android:paddingEnd="16dp"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/back"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_back"
         app:tint="@color/light_txt_color" />
 
@@ -34,58 +36,71 @@
         android:layout_gravity="center"
         android:text="@string/complete_style_recommender"
         android:textColor="@color/light_txt_color"
-        android:textSize="21sp"
+        android:textSize="22sp"
+        android:textStyle="bold"
         android:fontFamily="@font/inter_regular" />
 
   </androidx.appcompat.widget.Toolbar>
 
-  <!-- Scrollable form -->
+  <!-- Scrollable form with improved padding and spacing -->
   <ScrollView
       android:id="@+id/scrollView"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:padding="16dp"
+      android:clipToPadding="false"
+      android:scrollbars="none"
       app:layout_constraintTop_toBottomOf="@id/toolbar"
       app:layout_constraintBottom_toTopOf="@id/recommendButton">
 
-    <!-- ONE direct child -->
+    <!-- Main container with improved spacing -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
 
-      <!-- Personal Information Section -->
+      <!-- Enhanced Section Headers -->
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
-          android:layout_marginBottom="8dp"
+          android:layout_marginTop="16dp"
+          android:layout_marginBottom="12dp"
           android:text="@string/personalInfo"
           android:textColor="@color/light_txt_color"
           android:fontFamily="@font/inter_regular"
-          android:textSize="18sp" />
+          android:textStyle="bold"
+          android:textSize="20sp" />
 
-      <!-- Age Section -->
+      <!-- Age Section with improved layout -->
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/ageLayout"
           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp"
+          app:boxCornerRadiusBottomEnd="12dp"
+          app:boxCornerRadiusBottomStart="12dp"
+          app:boxCornerRadiusTopEnd="12dp"
+          app:boxCornerRadiusTopStart="12dp"
+          app:boxStrokeWidth="2dp"
           android:hint="@string/age">
 
         <AutoCompleteTextView
             android:id="@+id/ageDropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:inputType="none" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <!-- Gender and Budget Section -->
+      <!-- Gender and Budget Section with improved spacing -->
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
+          android:layout_marginTop="12dp"
+          android:layout_marginBottom="8dp"
           android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -95,12 +110,18 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/gender">
 
           <AutoCompleteTextView
               android:id="@+id/genderDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,129 +132,177 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/budget">
 
           <AutoCompleteTextView
               android:id="@+id/budgetDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
       </LinearLayout>
 
-      <!-- Body Measurements Section -->
+      <!-- Enhanced Section Header with divider -->
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="16dp"
+          android:background="#E0E0E0"/>
+
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          android:layout_marginBottom="8dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="12dp"
           android:text="@string/body_measur"
           android:textColor="@color/light_txt_color"
           android:fontFamily="@font/inter_regular"
-          android:textSize="18sp" />
+          android:textStyle="bold"
+          android:textSize="20sp" />
 
+      <!-- Body Type with improved layout -->
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/bodyTypeLayout"
           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp"
+          app:boxCornerRadiusBottomEnd="12dp"
+          app:boxCornerRadiusBottomStart="12dp"
+          app:boxCornerRadiusTopEnd="12dp"
+          app:boxCornerRadiusTopStart="12dp"
+          app:boxStrokeWidth="2dp"
           android:hint="@string/body_type">
 
         <AutoCompleteTextView
             android:id="@+id/bodyTypeDropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:inputType="none" />
       </com.google.android.material.textfield.TextInputLayout>
 
+      <!-- Fit Type with improved layout -->
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/fitTypeLayout"
           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
+          android:layout_marginTop="12dp"
+          android:layout_marginBottom="8dp"
+          app:boxCornerRadiusBottomEnd="12dp"
+          app:boxCornerRadiusBottomStart="12dp"
+          app:boxCornerRadiusTopEnd="12dp"
+          app:boxCornerRadiusTopStart="12dp"
+          app:boxStrokeWidth="2dp"
           android:hint="@string/fitType">
 
         <AutoCompleteTextView
             android:id="@+id/fitTypeDropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:inputType="none" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <!-- Height, Weight, Size Section -->
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
-          android:orientation="horizontal">
+      <!-- Height, Weight, Size Section with improved layout -->
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/heightLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/height">
 
           <AutoCompleteTextView
               android:id="@+id/heightDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/weightLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginTop="16dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/weight">
 
           <AutoCompleteTextView
               android:id="@+id/weightDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sizeLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/size">
 
           <AutoCompleteTextView
               android:id="@+id/sizeDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
-      </LinearLayout>
 
-      <!-- Skin Details Section -->
+      <!-- Enhanced Section Header with divider -->
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="16dp"
+          android:background="#E0E0E0"/>
+
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          android:layout_marginBottom="8dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="12dp"
           android:text="@string/skinDetailes"
           android:textColor="@color/light_txt_color"
           android:fontFamily="@font/inter_regular"
-          android:textSize="18sp" />
+          android:textStyle="bold"
+          android:textSize="20sp" />
 
+      <!-- Skin Details Section with improved layout -->
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp"
           android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -243,12 +312,18 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/skinTone">
 
           <AutoCompleteTextView
               android:id="@+id/skinToneDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -259,31 +334,46 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/skinType">
 
           <AutoCompleteTextView
               android:id="@+id/skinTypeDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
       </LinearLayout>
 
-      <!-- Style Preferences Section -->
+      <!-- Enhanced Section Header with divider -->
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="16dp"
+          android:background="#E0E0E0"/>
+
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          android:layout_marginBottom="8dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="12dp"
           android:text="@string/style_reference"
           android:fontFamily="@font/inter_regular"
           android:textColor="@color/light_txt_color"
-          android:textSize="18sp" />
+          android:textStyle="bold"
+          android:textSize="20sp" />
 
+      <!-- Style Preferences Section with improved layout -->
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp"
           android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -293,12 +383,18 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/cloth_form">
 
           <AutoCompleteTextView
               android:id="@+id/clothingStyleDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -309,12 +405,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/makeup">
 
           <AutoCompleteTextView
               android:id="@+id/makeupStyleDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
       </LinearLayout>
@@ -322,7 +424,8 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
+          android:layout_marginTop="12dp"
+          android:layout_marginBottom="8dp"
           android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -332,12 +435,18 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/colors">
 
           <AutoCompleteTextView
               android:id="@+id/colorsDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -348,72 +457,110 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/fabric">
 
           <AutoCompleteTextView
               android:id="@+id/fabricDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
       </LinearLayout>
 
+      <!-- Makeup Products with improved layout -->
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/makeupProductsLayout"
           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
+          android:layout_marginTop="12dp"
+          android:layout_marginBottom="8dp"
+          app:boxCornerRadiusBottomEnd="12dp"
+          app:boxCornerRadiusBottomStart="12dp"
+          app:boxCornerRadiusTopEnd="12dp"
+          app:boxCornerRadiusTopStart="12dp"
+          app:boxStrokeWidth="2dp"
           android:hint="@string/makeup_item">
 
         <AutoCompleteTextView
             android:id="@+id/makeupProductsDropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:inputType="none" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <!-- Occasion Section -->
+      <!-- Enhanced Section Header with divider -->
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="16dp"
+          android:background="#E0E0E0"/>
+
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          android:layout_marginBottom="8dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="12dp"
           android:text="@string/occasion"
           android:fontFamily="@font/inter_regular"
+          android:textStyle="bold"
           android:textColor="@color/light_txt_color"
-          android:textSize="18sp" />
+          android:textSize="20sp" />
 
+      <!-- Occasion with improved layout -->
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/occasionTypeLayout"
           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp"
+          app:boxCornerRadiusBottomEnd="12dp"
+          app:boxCornerRadiusBottomStart="12dp"
+          app:boxCornerRadiusTopEnd="12dp"
+          app:boxCornerRadiusTopStart="12dp"
+          app:boxStrokeWidth="2dp"
           android:hint="@string/occasion_type">
 
         <AutoCompleteTextView
             android:id="@+id/occasionTypeDropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:inputType="none" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <!-- Color Preferences Section -->
+      <!-- Enhanced Section Header with divider -->
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="16dp"
+          android:background="#E0E0E0"/>
+
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          android:layout_marginBottom="8dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="12dp"
           android:text="@string/Preference"
           android:fontFamily="@font/inter_regular"
+          android:textStyle="bold"
           android:textColor="@color/light_txt_color"
-          android:textSize="18sp" />
+          android:textSize="20sp" />
 
+      <!-- Preferences Section with improved layout -->
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
+          android:layout_marginBottom="8dp"
           android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -423,12 +570,18 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/clothing_items">
 
           <AutoCompleteTextView
               android:id="@+id/itemsDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -439,12 +592,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/preference_type">
 
           <AutoCompleteTextView
               android:id="@+id/preferenceDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
       </LinearLayout>
@@ -452,64 +611,83 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
+          android:layout_marginTop="12dp"
+          android:layout_marginBottom="8dp"
           android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/shadesLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/makeup_shades">
 
           <AutoCompleteTextView
               android:id="@+id/shadesDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/accessoriesLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="2dp"
             android:hint="@string/accessories">
 
           <AutoCompleteTextView
               android:id="@+id/accessoriesDropdown"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:padding="16dp"
               android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
       </LinearLayout>
 
-      <!-- Progress indicator -->
+      <!-- Enhanced Progress indicator -->
       <ProgressBar
           android:id="@+id/progressBar"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:layout_marginTop="24dp"
           android:visibility="gone"
           android:indeterminate="true"
+          android:indeterminateTint="@color/light_txt_color"
           android:layout_gravity="center"/>
     </LinearLayout>
   </ScrollView>
 
-  <!-- Recommend Button -->
+  <!-- Enhanced Recommend Button -->
   <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/recommendButton"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="16dp"
       android:background="@drawable/bg_btn"
-      android:padding="12dp"
+      android:elevation="4dp"
+      android:padding="16dp"
       android:text="@string/lets_go"
       android:textAllCaps="false"
       android:textColor="@color/white"
-      android:textSize="16sp"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      android:fontFamily="@font/inter_regular"
       app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

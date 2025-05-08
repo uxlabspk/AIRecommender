@@ -166,7 +166,11 @@ public class MakeupActivity extends AppCompatActivity {
 
     // Setup dropdown for Budget
     private void setupBudgetDropdown() {
-        String[] items = new String[]{"$0-$50", "$50-$100", "$100-$200", "$200-$500", "$500+"};
+        String[] items = new String[]{"PKR 0-15,000",
+                "PKR 15,000-30,000",
+                "PKR 30,000-60,000",
+                "PKR 60,000-150,000",
+                "PKR 150,000+"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.dropdown_item, items);
         binding.budgetDropdown.setAdapter(adapter);
     }

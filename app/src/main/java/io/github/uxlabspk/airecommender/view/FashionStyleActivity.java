@@ -91,7 +91,11 @@ public class FashionStyleActivity extends AppCompatActivity {
 
         binding.weightDropdown.setAdapter(new ArrayAdapter<>(this,
                 R.layout.dropdown_item,
-                new String[]{"<120 lbs", "120-150 lbs", "151-180 lbs", "181-210 lbs", ">210 lbs"}));
+                new String[]{"<54.4 kg",
+                        "54.4–68.0 kg",
+                        "68.5–81.6 kg",
+                        "82.1–95.3 kg",
+                        ">95.3 kg"}));
 
         binding.sizeDropdown.setAdapter(new ArrayAdapter<>(this,
                 R.layout.dropdown_item,
@@ -212,7 +216,7 @@ public class FashionStyleActivity extends AppCompatActivity {
                         intent.putExtra("image_path", file.getAbsolutePath());
                         intent.putExtra("prompt", prompt);
                         startActivity(intent);
-                        finish();
+
                     } catch (Exception e) {
                         progressStatus.dismiss();
                         e.printStackTrace();

@@ -30,7 +30,7 @@ public class ClothFormActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // on back button clicked
-        binding.backButton.setOnClickListener(v-> finish());
+        binding.backButton.setOnClickListener(v -> finish());
 
         // on recommend button clicked
         binding.recommendButton.setOnClickListener(v -> recommend());
@@ -206,7 +206,11 @@ public class ClothFormActivity extends AppCompatActivity {
     }
 
     private void setupBudgetDropdown() {
-        String[] items = new String[]{"$0-$50", "$50-$100", "$100-$200", "$200-$500", "$500+"};
+        String[] items = new String[]{"PKR 0-15,000",
+                "PKR 15,000-30,000",
+                "PKR 30,000-60,000",
+                "PKR 60,000-150,000",
+                "PKR 150,000+"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.dropdown_item, items);
         binding.budgetDropdown.setAdapter(adapter);
@@ -234,7 +238,11 @@ public class ClothFormActivity extends AppCompatActivity {
     }
 
     private void setupWeightDropdown() {
-        String[] items = new String[]{"<120 lbs", "120-150 lbs", "151-180 lbs", "181-210 lbs", ">210 lbs"};
+        String[] items = new String[]{"<54.4 kg",
+                "54.4–68.0 kg",
+                "68.5–81.6 kg",
+                "82.1–95.3 kg",
+                ">95.3 kg"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.dropdown_item, items);
         binding.weightDropdown.setAdapter(adapter);

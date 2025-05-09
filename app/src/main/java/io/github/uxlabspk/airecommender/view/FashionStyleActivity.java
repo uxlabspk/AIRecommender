@@ -159,6 +159,11 @@ public class FashionStyleActivity extends AppCompatActivity {
     }
 
     private void generateCompleteLook() {
+        if (!validateFormInputs()) {
+            Toast.makeText(this, "Please fill in all fields before proceeding.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         // show “Thinking…” dialog
         ProgressStatus progressStatus = new ProgressStatus(this);
         progressStatus.setCanceledOnTouchOutside(false);
@@ -212,7 +217,7 @@ public class FashionStyleActivity extends AppCompatActivity {
                         // stopping progress indicator
                         progressStatus.dismiss();
 
-                        Intent intent = new Intent(FashionStyleActivity.this, ResultActivity.class);
+                        Intent intent = new Intent(FashionStyleActivity.this, Fashion_results.class);
                         intent.putExtra("image_path", file.getAbsolutePath());
                         intent.putExtra("prompt", prompt);
                         startActivity(intent);
@@ -237,4 +242,28 @@ public class FashionStyleActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean validateFormInputs() {
+        return !binding.ageDropdown.getText().toString().isEmpty() &&
+                !binding.genderDropdown.getText().toString().isEmpty() &&
+                !binding.budgetDropdown.getText().toString().isEmpty() &&
+                !binding.bodyTypeDropdown.getText().toString().isEmpty() &&
+                !binding.fitTypeDropdown.getText().toString().isEmpty() &&
+                !binding.heightDropdown.getText().toString().isEmpty() &&
+                !binding.weightDropdown.getText().toString().isEmpty() &&
+                !binding.sizeDropdown.getText().toString().isEmpty() &&
+                !binding.skinToneDropdown.getText().toString().isEmpty() &&
+                !binding.skinTypeDropdown.getText().toString().isEmpty() &&
+                !binding.clothingStyleDropdown.getText().toString().isEmpty() &&
+                !binding.makeupStyleDropdown.getText().toString().isEmpty() &&
+                !binding.colorsDropdown.getText().toString().isEmpty() &&
+                !binding.fabricDropdown.getText().toString().isEmpty() &&
+                !binding.makeupProductsDropdown.getText().toString().isEmpty() &&
+                !binding.occasionTypeDropdown.getText().toString().isEmpty() &&
+                !binding.itemsDropdown.getText().toString().isEmpty() &&
+                !binding.preferenceDropdown.getText().toString().isEmpty() &&
+                !binding.shadesDropdown.getText().toString().isEmpty() &&
+                !binding.accessoriesDropdown.getText().toString().isEmpty();
+    }
+
 }

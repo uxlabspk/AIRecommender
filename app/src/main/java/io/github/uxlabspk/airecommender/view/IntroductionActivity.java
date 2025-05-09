@@ -36,6 +36,6 @@ public class IntroductionActivity extends AppCompatActivity {
 
 
         // Getting started
-        binding.getStartedBtn.setOnClickListener(v -> startActivity(new Intent(IntroductionActivity.this, AccountActivity.class)));
+        binding.getStartedBtn.setOnClickListener(v -> startActivity(new Intent(IntroductionActivity.this, MainActivity.class)));
     }
 }

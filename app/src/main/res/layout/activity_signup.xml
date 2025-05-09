@@ -49,12 +49,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/profileImageContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="48dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userAvatar"
@@ -71,19 +65,6 @@
                     app:civ_border_width="3dp"
                     app:civ_circle_background_color="@color/white" />
 
-                <ImageButton
-                    android:id="@+id/changeProfileBtn"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/edit_icon_background"
-                    android:src="@drawable/ic_edit"
-                    android:scaleType="center"
-                    android:contentDescription="@string/logo_placeholder"
-                    android:elevation="8dp" />
-            </FrameLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -212,8 +193,8 @@
                 android:elevation="6dp"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginBottom="5dp"
-                android:backgroundTint="@color/border_color"
-                android:textColor="@android:color/black"
+                android:backgroundTint="@color/black"
+                android:textColor="@android:color/white"
                 android:background="@drawable/bg_input"
                 android:layout_marginStart="20sp"
                 android:layout_marginEnd="20sp"

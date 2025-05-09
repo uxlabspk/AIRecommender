@@ -45,19 +45,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/userAvatar"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/ic_user"
-                android:layout_marginTop="120dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/app_name"
-                app:tint="@color/light_txt_color" />
+            <!-- Enhanced Profile Image Component with Material Design 3 styling -->
+            <FrameLayout
+                android:id="@+id/profileImageContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp">
+
+                <!-- Profile Picture -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userAvatar"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center"
+
+                    android:contentDescription="@string/logo_placeholder"
+                    android:src="@drawable/ic_account_screen"
+                    android:scaleType="centerCrop"
+                    android:padding="8dp"
+                    android:background="@drawable/avatar_background_shadow"
+                    android:elevation="8dp"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="3dp"
+                    app:civ_circle_background_color="@color/white" />
+
+                <!-- Edit Icon (ImageButton with circular ripple) -->
+                <ImageButton
+                    android:id="@+id/changeProfileBtn"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/edit_icon_background"
+                    android:src="@drawable/ic_edit"
+                    android:scaleType="center"
+                    android:contentDescription="@string/logo_placeholder"
+                    android:elevation="8dp" />
+            </FrameLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_layout"
@@ -82,8 +113,11 @@
                     android:autofillHints="username"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    android:backgroundTint="@color/border_color"
                     android:background="@drawable/bg_input"
                     android:ems="10"
+                    android:drawableStart="@drawable/ic_user"
+                    android:drawablePadding="10dp"
                     android:fontFamily="@font/inter_regular"
                     android:hint="@string/full_name"
                     android:inputType="textPersonName"
@@ -119,6 +153,9 @@
                     android:background="@drawable/bg_input"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    android:backgroundTint="@color/border_color"
+                    android:drawableStart="@drawable/ic_user"
+                    android:drawablePadding="10dp"
                     android:ems="10"
                     android:fontFamily="@font/inter_regular"
                     android:hint="@string/email"
@@ -156,6 +193,9 @@
                     android:autofillHints="password"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    android:backgroundTint="@color/border_color"
+                    android:drawableStart="@drawable/ic_user"
+                    android:drawablePadding="10dp"
                     android:background="@drawable/bg_input"
                     android:hint="@string/password"
                     android:inputType="textPassword"

@@ -49,7 +49,7 @@
             android:layout_height="wrap_content">
 
             <!-- Main full body image -->
-            <ImageView
+            <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/fullView"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
@@ -57,25 +57,9 @@
                 android:layout_marginTop="20dp"
                 android:src="@drawable/img_sample"
                 android:contentDescription="@string/logo_placeholder"
-                android:scaleType="fitEnd"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
-
-            <!-- Close-up overlay image (positioned over the main image) - same source but cropped -->
-
-            <ImageView
-                android:id="@+id/closeupView"
-                android:layout_width="150dp"
-                android:layout_height="170dp"
-                android:contentDescription="@string/logo_placeholder"
-                android:elevation="8dp"
-                android:paddingTop="90dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_input"
-                android:src="@drawable/img_sample"
-                app:layout_constraintStart_toStartOf="@+id/fullView"
-                app:layout_constraintTop_toTopOf="@+id/fullView" />
 
             <TextView
                 android:id="@+id/noticeText"

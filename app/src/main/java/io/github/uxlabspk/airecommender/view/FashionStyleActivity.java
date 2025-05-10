@@ -177,7 +177,7 @@ public class FashionStyleActivity extends AppCompatActivity {
         // collect inputs
         String prompt = String.format(
                 "Generate a culturally authentic Pakistani‑Islamic outfit and makeup recommendation for a %s, age %s, budget %s, body type %s, fit %s, height %s, weight %s, size %s, skin tone %s, skin type %s, clothing style %s, makeup style %s, colors %s, fabric %s, makeup products %s, occasion %s, items %s, preference %s, shades %s, accessories %s. " +
-                        "Focus on modest Islamic aesthetics and traditional Pakistani textiles and silhouettes—think embroidered shalwar kameez, dupatta drapes, hijab options, native block prints and silk fabrics—and recommend halal‑friendly makeup that complements the look.",
+                        "Focus on modest Islamic aesthetics and traditional Pakistani textiles and silhouettes—think embroidered shalwar kameez, dupatta drapes, hijab options, native block prints and silk fabrics—and recommend halal‑friendly makeup that complements the look. The photo should be full body",
                 binding.genderDropdown.getText(),
                 binding.ageDropdown.getText(),
                 binding.budgetDropdown.getText(),
@@ -201,9 +201,8 @@ public class FashionStyleActivity extends AppCompatActivity {
         );
 
         String url = "https://router.huggingface.co/fal-ai/fal-ai/flux-lora";
-        String authToken = API_KEY;
 
-        ImageRequest.fetchImageWithPost(url, prompt, authToken, new ImageRequest.ImageCallback() {
+        ImageRequest.fetchImageWithPost(url, prompt, API_KEY, new ImageRequest.ImageCallback() {
             @Override
             public void onSuccess(Bitmap image) {
                 runOnUiThread(() -> {

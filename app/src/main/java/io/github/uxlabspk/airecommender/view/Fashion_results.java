@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,8 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -32,15 +30,18 @@ public class Fashion_results extends AppCompatActivity {
 
     private ActivityFashionResultsBinding binding;
     private FavouriteImagesViewModel favouriteImagesViewModel;
+    private boolean isZoomed = false;
+    private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityFashionResultsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         init();
-        // Option 1: Using Glide (recommended)
     }
+
     private void init() {
         // initialize the view model
         favouriteImagesViewModel = new ViewModelProvider(this).get(FavouriteImagesViewModel.class);
@@ -54,22 +55,46 @@ public class Fashion_results extends AppCompatActivity {
         // setting the prompt under image
         binding.noticeText.setText(getIntent().getStringExtra("prompt"));
 
-        // loading the image
-        String imagePath = getIntent().getStringExtra("image_path");
-        if (imagePath != null) {
-            File imgFile = new File(imagePath);
-            if (imgFile.exists()) {
-                Glide.with(this)
-                        .load(imgFile)
-                        .fitCenter()
-                        .into(binding.fullView);
-
-                Glide.with(this)
-                        .load(imgFile)
-                        .fitCenter()
-                        .into(binding.closeupView);
-            }
+        // Get image path from intent or use default
+        imagePath = getIntent().getStringExtra("image_path");
+        if (imagePath == null || imagePath.isEmpty()) {
+            imagePath = "https://firebasestorage.googleapis.com/v0/b/syncbox-c24b7.appspot.com/o/images%2FbgmWtjWkkpPcxbVIvff5R2rOt2q1%2Fgenerated_image22d6eecc-de7c-4bd3-aff4-71e0c52b23e0.jpg?alt=media&token=0d39de99-8607-44d6-902b-dc49d5e6cde0";
         }
+
+        // Load the image into the PhotoView
+        Glide.with(this)
+                .load(imagePath)
+                .centerCrop()
+                .into(binding.fullView);
+
+        // Set scale change listener to toggle UI visibility
+        binding.fullView.setOnScaleChangeListener((scaleFactor, focusX, focusY) -> {
+            if (scaleFactor > 1.0f) {
+                // Hide UI elements when zoomed in
+                binding.buttonsLayout.setVisibility(View.GONE);
+                binding.noticeText.setVisibility(View.GONE);
+                isZoomed = true;
+            } else {
+                // Show UI elements when at normal zoom
+                binding.buttonsLayout.setVisibility(View.VISIBLE);
+                binding.noticeText.setVisibility(View.VISIBLE);
+                isZoomed = false;
+            }
+        });
+
+        // Set single tap listener to toggle UI visibility
+        binding.fullView.setOnClickListener(view -> {
+            if (isZoomed) {
+                // Toggle UI visibility on tap when zoomed
+                if (binding.buttonsLayout.getVisibility() == View.VISIBLE) {
+                    binding.buttonsLayout.setVisibility(View.GONE);
+                    binding.noticeText.setVisibility(View.GONE);
+                } else {
+                    binding.buttonsLayout.setVisibility(View.VISIBLE);
+                    binding.noticeText.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         // on download button clicked
         binding.downloadBtn.setOnClickListener(view -> saveImageToGalleryModern(imagePath));
@@ -127,5 +152,4 @@ public class Fashion_results extends AppCompatActivity {
             Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

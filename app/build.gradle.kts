@@ -66,4 +66,5 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(libs.sdk.for1.android)
+
 }

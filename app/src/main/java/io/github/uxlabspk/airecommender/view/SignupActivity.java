@@ -105,7 +105,7 @@ public class SignupActivity extends AppCompatActivity {
             ps.show();
 
             // create the user
-            authViewModel.registerUser(filePath, userName, email, password);
+            authViewModel.registerUser(SignupActivity.this, filePath, userName, email, password);
         }
     }
 

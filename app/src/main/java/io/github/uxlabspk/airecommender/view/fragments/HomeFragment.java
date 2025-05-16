@@ -133,13 +133,11 @@ public class HomeFragment extends Fragment {
     private void uploadImg() {
         SupabaseImageUploader uploader = new SupabaseImageUploader(
                 getContext(),
-                "https://yyryndlaspcnrpxgsvtg.supabase.co",
-                "",
                 "img"
         );
 
         // Upload an image from gallery (after you've selected an image and have its Uri)
-        uploader.uploadImage(selectedImageUri, new SupabaseImageUploader.UploadCallback() {
+        uploader.uploadImage(selectedImageUri, "",  new SupabaseImageUploader.UploadCallback() {
             @Override
             public void onSuccess(String fileUrl) {
                 // Handle successful upload - fileUrl is the public URL to your uploaded image

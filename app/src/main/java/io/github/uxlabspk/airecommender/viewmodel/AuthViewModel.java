@@ -1,5 +1,6 @@
 package io.github.uxlabspk.airecommender.viewmodel;
 
+import android.content.Context;
 import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
@@ -22,8 +23,8 @@ public class AuthViewModel extends ViewModel {
         authRepository.fetchUserInformation();
     }
 
-    public void registerUser(Uri imagePath, String userName, String userEmail, String userPassword) {
-        authRepository.registerUser(imagePath, userName, userEmail, userPassword);
+    public void registerUser(Context context, Uri imagePath, String userName, String userEmail, String userPassword) {
+        authRepository.registerUser(context, imagePath, userName, userEmail, userPassword);
     }
 
     public void loginUser(String userEmail, String userPassword) {
@@ -34,8 +35,8 @@ public class AuthViewModel extends ViewModel {
         authRepository.continueWithGoogle(authCredential);
     }
 
-    public void updateUser(Uri imagePath, String userName) {
-        authRepository.updateUser(imagePath, userName);
+    public void updateUser(Context context, Uri imagePath, String userName) {
+        authRepository.updateUser(context, imagePath, userName);
     }
 
     public void logoutUser() {

@@ -15,6 +15,7 @@ android {
         versionName = "1.0"
 
         buildConfigField("String", "apiKey", "\"${project.findProperty("API_KEY") ?: ""}\"")
+        buildConfigField("String", "supabaseApiKey", "\"${project.findProperty("SupaBaseApiKey") ?: ""}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

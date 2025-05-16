@@ -103,7 +103,7 @@ public class Fashion_results extends AppCompatActivity {
         binding.favouriteButton.setOnClickListener(view -> {
             binding.favouriteButton.setImageDrawable(getDrawable(R.drawable.ic_filled_heart));
             new Handler(Looper.getMainLooper()).postDelayed(() -> binding.favouriteButton.setVisibility(View.GONE), 3000);
-            favouriteImagesViewModel.saveImage(imagePath);
+            favouriteImagesViewModel.saveImage(Fashion_results.this, imagePath);
         });
     }
 

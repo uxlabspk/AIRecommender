@@ -1,5 +1,7 @@
 package io.github.uxlabspk.airecommender.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,8 +18,8 @@ public class FavouriteImagesViewModel extends ViewModel {
         favouriteImageRepository = new FavouriteImageRepository();
     }
 
-    public void saveImage(String imagePath) {
-        favouriteImageRepository.saveImage(imagePath);
+    public void saveImage(Context context, String imagePath) {
+        favouriteImageRepository.saveImage(context, imagePath);
     }
 
     public MutableLiveData<List<ImageModel>> getImageLiveData() {

@@ -307,7 +307,7 @@ public class SupabaseImageUploader {
                 String name = imageObject.getString("name");
 
                 // Create the full URL for the image
-                String imageUrl = SUPABASE_URL + "/storage/v1/object/public/" + BUCKET_NAME + "/" + name;
+                String imageUrl = SUPABASE_URL + "/storage/v1/object/public/" + BUCKET_NAME + "/" + FirebaseAuth.getInstance().getUid() + "/generated/" + name;
                 imageModels.add(new ImageModel(imageUrl));
             }
         } catch (JSONException e) {

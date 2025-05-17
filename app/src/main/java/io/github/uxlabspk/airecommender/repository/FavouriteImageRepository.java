@@ -2,11 +2,14 @@ package io.github.uxlabspk.airecommender.repository;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,17 +51,20 @@ public class FavouriteImageRepository {
         uploader.listImagesInBucket(new SupabaseImageUploader.ListImagesCallback() {
             @Override
             public void onSuccess(List<ImageModel> images) {
-                // Handle the list of images here
-                imageLiveData.setValue(images);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    imageLiveData.setValue(images);
+                    Log.d("TAG", "onSuccess: " + images.get(0).getImageUrl());
+                });
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                Log.e("ImageList", "Failed to list images: " + errorMessage);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    Log.e("ImageList", "Failed to list images: " + errorMessage);
+                    message.setValue("Failed to list images: " + errorMessage);
+                });
             }
         });
-
-        Log.d("T", "loadImages: " + imageLiveData.getValue());
     }
 
     public MutableLiveData<List<ImageModel>> getImageLiveData() {

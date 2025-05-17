@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.0"
+chipNavigationBar = "1.4.0"
 credentialsPlayServicesAuthVersion = "1.2.2"
 credentialsVersion = "1.2.2"
 junit = "4.13.2"
@@ -23,6 +24,7 @@ firebaseStorage = "21.0.1"
 sdkForAndroid = "7.0.1"
 
 [libraries]
+chip-navigation-bar = { module = "com.github.ismaeldivita:chip-navigation-bar", version.ref = "chipNavigationBar" }
 credentials-play-services-auth-v122 = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuthVersion" }
 credentials-v122 = { module = "androidx.credentials:credentials", version.ref = "credentialsVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

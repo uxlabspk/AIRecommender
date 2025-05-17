@@ -1,8 +1,13 @@
 package io.github.uxlabspk.airecommender.view;
 
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityMainBinding;
 import io.github.uxlabspk.airecommender.view.fragments.HomeFragment;
@@ -27,21 +32,24 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
         }
 
-        binding.navView.setOnItemSelectedListener(item -> {
-            Fragment fragment;
-            if (item.getItemId() == R.id.item_home) {
-                fragment = new HomeFragment();
-            } else if (item.getItemId() == R.id.item_profile) {
-                fragment = new ProfileFragment();
-            } else {
-                fragment = new HomeFragment();
+        binding.navView.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int id) {
+                Fragment fragment = null;
+                if (id == R.id.item_home) {
+                    fragment = new HomeFragment();
+                } else if (id == R.id.item_profile) {
+                    fragment = new ProfileFragment();
+                }
+
+                if (fragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .commit();
+                } else {
+                    Log.e("TAG", "Error in creating fragment");
+                }
             }
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(binding.fragmentContainer.getId(), fragment)
-                    .commit();
-
-            return true;
         });
     }
 }

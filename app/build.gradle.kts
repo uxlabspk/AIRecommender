@@ -68,4 +68,6 @@ dependencies {
 
     implementation(libs.sdk.for1.android)
 
+    implementation (libs.chip.navigation.bar)
+
 }

@@ -95,21 +95,6 @@ public class AuthRepository {
         });
     }
 
-    // Continue with google
-    public void continueWithGoogle(AuthCredential authCredential) {
-        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
-                    databaseReference.child(firebaseUser.getUid()).setValue(new UserModel(firebaseUser.getUid(), Objects.requireNonNull(firebaseUser.getPhotoUrl()).toString(), firebaseUser.getDisplayName(), firebaseUser.getEmail()));
-                    userLiveData.setValue(firebaseUser);
-                }
-            } else {
-                errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
-            }
-        });
-    }
-
     // reset password
     public void resetPasswordRequest(String email) {
         firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(resetTask -> {

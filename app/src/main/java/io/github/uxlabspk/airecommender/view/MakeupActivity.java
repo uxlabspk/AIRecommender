@@ -52,7 +52,6 @@ public class MakeupActivity extends AppCompatActivity {
         setupBodyTypeDropdown();    // for skin tone
         setupFitTypeDropdown();     // for skin type
         setupStyleDropdown();       // for makeup style
-        setupColorsDropdown();      // for makeup products
         setupOccasionTypeDropdown();
         setupItemsDropdown();       // for shades
         setupAccessoriesDropdown(); // for makeup accessories
@@ -70,13 +69,12 @@ public class MakeupActivity extends AppCompatActivity {
         String skinTone = binding.bodyTypeDropdown.getText().toString();
         String skinType = binding.fitTypeDropdown.getText().toString();
         String makeupStyle = binding.styleDropdown.getText().toString();
-        String products = binding.colorsDropdown.getText().toString();
         String occasionType = binding.occasionTypeDropdown.getText().toString();
         String shades = binding.itemsDropdown.getText().toString();
         String accessories = binding.accessoriesDropdown.getText().toString();
 
         // Build prompt for makeup recommendation
-        String prompt = buildPrompt(age, budget, skinTone, skinType, makeupStyle, products, occasionType, shades, accessories);
+        String prompt = buildPrompt(age, budget, skinTone, skinType, makeupStyle, occasionType, shades, accessories);
 
         // Disable the button and show loading text
         binding.recommendButton.setEnabled(false);
@@ -140,18 +138,17 @@ public class MakeupActivity extends AppCompatActivity {
                 !binding.bodyTypeDropdown.getText().toString().isEmpty() &&
                 !binding.fitTypeDropdown.getText().toString().isEmpty() &&
                 !binding.styleDropdown.getText().toString().isEmpty() &&
-                !binding.colorsDropdown.getText().toString().isEmpty() &&
                 !binding.occasionTypeDropdown.getText().toString().isEmpty() &&
                 !binding.itemsDropdown.getText().toString().isEmpty() &&
                 !binding.accessoriesDropdown.getText().toString().isEmpty();
     }
 
     private String buildPrompt(String age, String budget, String skinTone, String skinType, String makeupStyle,
-                               String products, String occasionType, String shades, String accessories) {
+                                String occasionType, String shades, String accessories) {
         return "Generate a personalized makeup recommendation for a person aged " + age +
                 " with a budget of " + budget + ". The person has a " + skinTone +
                 " skin tone and " + skinType + " skin type. They prefer a " + makeupStyle +
-                " makeup look using " + products + " products, suitable for " + occasionType +
+                " makeup look using products, suitable for " + occasionType +
                 " occasions. Include suggestions for shades (" + shades +
                 ") and recommended accessories (" + accessories +
                 "). Provide a detailed and creative description.";
@@ -196,12 +193,6 @@ public class MakeupActivity extends AppCompatActivity {
         binding.styleDropdown.setAdapter(adapter);
     }
 
-    // Setup dropdown for Makeup Products
-    private void setupColorsDropdown() {
-        String[] items = new String[]{"Lipsticks", "Foundations", "Eyeshadows", "Blushes", "Mascaras"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.dropdown_item, items);
-        binding.colorsDropdown.setAdapter(adapter);
-    }
 
     // Setup dropdown for Occasion Type
     private void setupOccasionTypeDropdown() {

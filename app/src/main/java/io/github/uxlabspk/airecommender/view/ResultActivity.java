@@ -41,6 +41,7 @@ public class ResultActivity extends AppCompatActivity {
     private void init() {
         // initialize the view model
         favouriteImagesViewModel = new ViewModelProvider(this).get(FavouriteImagesViewModel.class);
+        favouriteImagesViewModel.init(ResultActivity.this);
 
         // observe the changes
         observe();

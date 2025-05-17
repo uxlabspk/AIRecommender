@@ -11,11 +11,14 @@ import io.github.uxlabspk.airecommender.model.ImageModel;
 import io.github.uxlabspk.airecommender.repository.FavouriteImageRepository;
 
 public class FavouriteImagesViewModel extends ViewModel {
-    private final FavouriteImageRepository favouriteImageRepository;
+    private FavouriteImageRepository favouriteImageRepository;
 
 
     public FavouriteImagesViewModel() {
-        favouriteImageRepository = new FavouriteImageRepository();
+    }
+
+    public void init(Context context) {
+        favouriteImageRepository = new FavouriteImageRepository(context);
     }
 
     public void saveImage(Context context, String imagePath) {

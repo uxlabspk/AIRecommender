@@ -1,32 +1,16 @@
 package io.github.uxlabspk.airecommender.view.fragments;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import io.github.uxlabspk.airecommender.databinding.FragmentHomeBinding;
-import io.github.uxlabspk.airecommender.repository.SupabaseImageUploader;
 import io.github.uxlabspk.airecommender.view.ClothFormActivity;
 import io.github.uxlabspk.airecommender.view.FashionStyleActivity;
 import io.github.uxlabspk.airecommender.view.MakeupActivity;

@@ -1,7 +1,6 @@
-package io.github.uxlabspk.airecommender.repository;
+package io.github.uxlabspk.airecommender.api;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -10,15 +9,22 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import io.github.uxlabspk.airecommender.BuildConfig;
+import io.github.uxlabspk.airecommender.model.ImageModel;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -217,6 +223,104 @@ public class SupabaseImageUploader {
             fis.read(bytes);
         }
         return bytes;
+    }
+
+    public void listImagesInBucket(ListImagesCallback callback) {
+        // Get the current user ID
+        String userId = FirebaseAuth.getInstance().getUid();
+        if (userId == null) {
+            callback.onFailure("User not authenticated");
+            return;
+        }
+
+        // Create the prefix path based on user ID
+        String prefix = userId + "/generated/";
+
+        // Create POST request to Supabase Storage API to list objects
+        String listUrl = SUPABASE_URL + "/storage/v1/object/list/" + BUCKET_NAME;
+
+        // Create the JSON request body
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("prefix", prefix);
+            requestBody.put("limit", 100);
+        } catch (JSONException e) {
+            callback.onFailure("Failed to create request: " + e.getMessage());
+            return;
+        }
+
+        RequestBody body = RequestBody.create(
+                MediaType.parse("application/json"),
+                requestBody.toString()
+        );
+
+        Request request = new Request.Builder()
+                .url(listUrl)
+                .addHeader("apikey", SUPABASE_API_KEY)
+                .addHeader("Authorization", "Bearer " + SUPABASE_API_KEY)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e(TAG, "List images failed: " + e.getMessage());
+                callback.onFailure("Failed to list images: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    String errorBody = response.body() != null ? response.body().string() : "Unknown error";
+                    Log.e(TAG, "Error response: " + response.code() + " - " + errorBody);
+                    callback.onFailure("Error: " + response.code() + " - " + errorBody);
+                    return;
+                }
+
+                try {
+                    if (response.body() != null) {
+                        String responseBody = response.body().string();
+                        Log.d(TAG, "List images success: " + responseBody);
+
+                        // Parse JSON and create image models
+                        List<ImageModel> imageModels = parseImageListResponse(responseBody);
+                        callback.onSuccess(imageModels);
+                    } else {
+                        callback.onFailure("Empty response body");
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error processing response: " + e.getMessage());
+                    callback.onFailure("Error processing response: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private List<ImageModel> parseImageListResponse(String responseBody) {
+        List<ImageModel> imageModels = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = new JSONArray(responseBody);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject imageObject = jsonArray.getJSONObject(i);
+                String name = imageObject.getString("name");
+
+                // Create the full URL for the image
+                String imageUrl = SUPABASE_URL + "/storage/v1/object/public/" + BUCKET_NAME + "/" + name;
+                imageModels.add(new ImageModel(imageUrl));
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Error parsing JSON response: " + e.getMessage());
+        }
+
+        return imageModels;
+    }
+
+    // Callback interface for listing images
+    public interface ListImagesCallback {
+        void onSuccess(List<ImageModel> images);
+        void onFailure(String errorMessage);
     }
 
     public interface UploadCallback {

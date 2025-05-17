@@ -42,6 +42,7 @@ public class FavouriteImagesActivity extends AppCompatActivity {
 
         // initializing the view model
         viewModel = new ViewModelProvider(this).get(FavouriteImagesViewModel.class);
+        viewModel.init(FavouriteImagesActivity.this);
 
         // go back button
         binding.goBack.setOnClickListener(view -> finish());

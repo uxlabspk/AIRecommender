@@ -2,21 +2,15 @@ package io.github.uxlabspk.airecommender.repository;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import java.io.File;
-import java.sql.Time;
-import java.time.Clock;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
+import io.github.uxlabspk.airecommender.api.SupabaseImageUploader;
 import io.github.uxlabspk.airecommender.model.ImageModel;
 
 public class FavouriteImageRepository {
@@ -24,8 +18,8 @@ public class FavouriteImageRepository {
     private final MutableLiveData<List<ImageModel>> imageLiveData = new MutableLiveData<>();
 
     // constructor
-    public FavouriteImageRepository() {
-        loadImages();
+    public FavouriteImageRepository(Context context) {
+        loadImages(context);
     }
 
     // save image to firebase storage
@@ -49,29 +43,22 @@ public class FavouriteImageRepository {
     }
 
     // loading the image
-    private void loadImages() {
-//        SupabaseImageUploader uploader = new SupabaseImageUploader(context, "img");
+    private void loadImages(Context context) {
+        SupabaseImageUploader uploader = new SupabaseImageUploader(context, "img");
+        uploader.listImagesInBucket(new SupabaseImageUploader.ListImagesCallback() {
+            @Override
+            public void onSuccess(List<ImageModel> images) {
+                // Handle the list of images here
+                imageLiveData.setValue(images);
+            }
 
-//        uploader.listAllImages("generated");
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("ImageList", "Failed to list images: " + errorMessage);
+            }
+        });
 
-//        StorageReference storageRef = storage.getReference().child("images/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() + "/");
-//
-//        storageRef.listAll()
-//                .addOnSuccessListener(listResult -> {
-//                    if (listResult.getItems().isEmpty()) {
-//                        message.setValue("Not Found");
-//                    }
-//                    List<ImageModel> imageList = new ArrayList<>();
-//                    for (StorageReference fileRef : listResult.getItems()) {
-//                        fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-//                            if (uri != null) {
-//                                imageList.add(new ImageModel(uri.toString()));
-//                                imageLiveData.setValue(imageList); // Update LiveData after each fetch
-//                            }
-//                        });
-//                    }
-//                })
-//                .addOnFailureListener(e -> message.setValue(e.getMessage()));
+        Log.d("T", "loadImages: " + imageLiveData.getValue());
     }
 
     public MutableLiveData<List<ImageModel>> getImageLiveData() {

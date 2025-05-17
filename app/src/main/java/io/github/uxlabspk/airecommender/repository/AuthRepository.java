@@ -21,6 +21,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
 
+import io.github.uxlabspk.airecommender.api.SupabaseImageUploader;
 import io.github.uxlabspk.airecommender.model.UserModel;
 
 public class AuthRepository {
@@ -148,7 +149,14 @@ public class AuthRepository {
     // update user information
     public void updateUser(Context context, Uri imagePath, String userName) {
         if (imagePath == null) {
-            errorLiveData.setValue("No image selected");
+            databaseReference.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").setValue(userName)
+                            .addOnSuccessListener(task -> {
+                                successLiveData.setValue("Profile updated successfully");
+                            })
+                            .addOnFailureListener(error -> {
+                                errorLiveData.setValue("Failed to update profile: " + error.getMessage());
+
+                            });
             return;
         }
 

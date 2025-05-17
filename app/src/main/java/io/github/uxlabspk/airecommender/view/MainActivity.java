@@ -30,26 +30,20 @@ public class MainActivity extends AppCompatActivity {
         // On UI refresh, No transaction will occur.
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            binding.navView.setItemSelected(R.id.item_home, true);
         }
 
-        binding.navView.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int id) {
-                Fragment fragment = null;
-                if (id == R.id.item_home) {
-                    fragment = new HomeFragment();
-                } else if (id == R.id.item_profile) {
-                    fragment = new ProfileFragment();
-                }
-
-                if (fragment != null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .commit();
-                } else {
-                    Log.e("TAG", "Error in creating fragment");
-                }
+        binding.navView.setOnItemSelectedListener(id -> {
+            Fragment fragment = new HomeFragment();
+            if (id == R.id.item_home) {
+                fragment = new HomeFragment();
+            } else if (id == R.id.item_profile) {
+                fragment = new ProfileFragment();
             }
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
         });
     }
 }

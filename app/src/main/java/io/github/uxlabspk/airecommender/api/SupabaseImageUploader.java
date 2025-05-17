@@ -38,7 +38,7 @@ import okhttp3.Response;
 public class SupabaseImageUploader {
     private static final String TAG = "SupabaseImageUploader";
 
-    private final String SUPABASE_URL = "https://yyryndlaspcnrpxgsvtg.supabase.co";
+    private final String SUPABASE_URL = "https://mwjvfrfjumjsubzganou.supabase.co";
     private final String SUPABASE_API_KEY = BuildConfig.supabaseApiKey;
     private final String BUCKET_NAME;
     private final OkHttpClient client;

@@ -35,12 +35,16 @@ public class FavouriteImageRepository {
         uploader.uploadImage(fileUri, "generated/gen_" + UUID.randomUUID() + ".png", new SupabaseImageUploader.UploadCallback() {
             @Override
             public void onSuccess(String fileUrl) {
-                message.setValue("Upload successful!");
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    message.setValue("Upload successful!");
+                });
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                message.setValue("Upload failed: " + errorMessage);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    message.setValue("Upload failed: " + errorMessage);
+                });
             }
         });
     }

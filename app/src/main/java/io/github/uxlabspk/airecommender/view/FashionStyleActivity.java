@@ -129,9 +129,6 @@ public class FashionStyleActivity extends AppCompatActivity {
                 R.layout.dropdown_item,
                 new String[]{"Cotton", "Linen", "Silk", "Wool", "Synthetic", "Denim"}));
 
-        binding.makeupProductsDropdown.setAdapter(new ArrayAdapter<>(this,
-                R.layout.dropdown_item,
-                new String[]{"Lipsticks", "Foundations", "Eyeshadows", "Blushes", "Mascaras"}));
     }
 
     private void setupOccasionDropdown() {
@@ -192,7 +189,6 @@ public class FashionStyleActivity extends AppCompatActivity {
                 binding.makeupStyleDropdown.getText(),
                 binding.colorsDropdown.getText(),
                 binding.fabricDropdown.getText(),
-                binding.makeupProductsDropdown.getText(),
                 binding.occasionTypeDropdown.getText(),
                 binding.itemsDropdown.getText(),
                 binding.preferenceDropdown.getText(),
@@ -257,7 +253,6 @@ public class FashionStyleActivity extends AppCompatActivity {
                 !binding.makeupStyleDropdown.getText().toString().isEmpty() &&
                 !binding.colorsDropdown.getText().toString().isEmpty() &&
                 !binding.fabricDropdown.getText().toString().isEmpty() &&
-                !binding.makeupProductsDropdown.getText().toString().isEmpty() &&
                 !binding.occasionTypeDropdown.getText().toString().isEmpty() &&
                 !binding.itemsDropdown.getText().toString().isEmpty() &&
                 !binding.preferenceDropdown.getText().toString().isEmpty() &&

@@ -317,6 +317,57 @@ public class SupabaseImageUploader {
         return imageModels;
     }
 
+    public void deleteImage(String fileName, DeleteCallback callback) {
+        // Get the current user ID
+        String userId = FirebaseAuth.getInstance().getUid();
+        if (userId == null) {
+            callback.onFailure("User not authenticated");
+            return;
+        }
+
+        // Create DELETE request to Supabase Storage API
+        String deleteUrl = SUPABASE_URL + "/storage/v1/object/" + BUCKET_NAME + "/" + userId + "/generated/" + fileName;
+
+        Request request = new Request.Builder()
+                .url(deleteUrl)
+                .addHeader("apikey", SUPABASE_API_KEY)
+                .addHeader("Authorization", "Bearer " + SUPABASE_API_KEY)
+                .delete()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e(TAG, "Delete failed: " + e.getMessage());
+                callback.onFailure("Delete failed: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    String errorBody = response.body() != null ? response.body().string() : "Unknown error";
+                    Log.e(TAG, "Error response: " + response.code() + " - " + errorBody);
+                    callback.onFailure("Error: " + response.code() + " - " + errorBody);
+                    return;
+                }
+
+                try {
+                    Log.d(TAG, "Delete success for file: " + fileName);
+                    callback.onSuccess("File deleted successfully: " + fileName);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error processing response: " + e.getMessage());
+                    callback.onFailure("Error processing response: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    // Callback interface for delete operation
+    public interface DeleteCallback {
+        void onSuccess(String message);
+        void onFailure(String errorMessage);
+    }
+
     // Callback interface for listing images
     public interface ListImagesCallback {
         void onSuccess(List<ImageModel> images);

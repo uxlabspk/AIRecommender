@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Objects;
 
 import io.github.uxlabspk.airecommender.R;
+import io.github.uxlabspk.airecommender.api.SupabaseImageUploader;
 import io.github.uxlabspk.airecommender.model.ImageModel;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
@@ -64,7 +65,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         // delete the image
         holder.deleteBtn.setOnClickListener(view -> {
-           deleteImage(imageList.get(position).getImageUrl());
+           deleteImage(context, imageList.get(position).getImageUrl());
            imageList.remove(position);
            notifyItemRemoved(position);
         });
@@ -146,27 +147,28 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }).start();
     }
 
-    private void deleteImage(String imagePath) {
-        // Extracting the file name from path
-        String fileName = "";
-        try {
-            File file = new File(new URI(imagePath).getPath());
-            fileName = file.getName();
-        } catch (URISyntaxException error) {
-            Log.d("ERROR", "deleteImage: " + error.getMessage());
-        }
+    private void deleteImage(Context context, String imagePath) {
+        SupabaseImageUploader imageUploader = new SupabaseImageUploader(context, "img");
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("images/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() + "/" +  fileName);
+        String fileName = imagePath.substring(imagePath.lastIndexOf("/") + 1);
 
-        storageRef.delete().addOnCompleteListener(task -> {
-           if (task.isComplete()) {
-               Toast.makeText(context, "Image deleted successfully", Toast.LENGTH_SHORT).show();
-           } else {
-               Toast.makeText(context, "Failed to delete image", Toast.LENGTH_SHORT).show();
-           }
+        // If the image is in a subfolder, include the subfolder path
+        String pathWithFileName = fileName;
+
+        // Delete the image
+        imageUploader.deleteImage(pathWithFileName, new SupabaseImageUploader.DeleteCallback() {
+            @Override
+            public void onSuccess(String message) {
+                // Remove from the list and update UI
+                Toast.makeText(context, "Removed ", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(context, "Failed to delete: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
         });
-
     }
 
     @Override

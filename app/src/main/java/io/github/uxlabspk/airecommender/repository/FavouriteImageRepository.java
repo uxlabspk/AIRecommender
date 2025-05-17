@@ -51,10 +51,12 @@ public class FavouriteImageRepository {
         uploader.listImagesInBucket(new SupabaseImageUploader.ListImagesCallback() {
             @Override
             public void onSuccess(List<ImageModel> images) {
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    imageLiveData.setValue(images);
-                    Log.d("TAG", "onSuccess: " + images.get(0).getImageUrl());
-                });
+                if (!images.isEmpty()) {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        imageLiveData.setValue(images);
+                        Log.d("TAG", "onSuccess: " + images.get(0).getImageUrl());
+                    });
+                }
             }
 
             @Override

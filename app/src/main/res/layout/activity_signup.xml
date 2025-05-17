@@ -45,19 +45,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/userAvatar"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/ic_user"
-                android:layout_marginTop="120dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/app_name"
-                app:tint="@color/light_txt_color" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userAvatar"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/logo_placeholder"
+                    android:src="@drawable/ic_account_screen"
+                    android:scaleType="centerCrop"
+                    android:padding="8dp"
+                    android:background="@drawable/avatar_background_shadow"
+                    android:elevation="8dp"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="3dp"
+                    app:civ_circle_background_color="@color/white" />
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_layout"
@@ -82,8 +90,11 @@
                     android:autofillHints="username"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    android:backgroundTint="@color/border_color"
                     android:background="@drawable/bg_input"
                     android:ems="10"
+                    android:drawableStart="@drawable/ic_user"
+                    android:drawablePadding="10dp"
                     android:fontFamily="@font/inter_regular"
                     android:hint="@string/full_name"
                     android:inputType="textPersonName"
@@ -119,6 +130,9 @@
                     android:background="@drawable/bg_input"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    android:backgroundTint="@color/border_color"
+                    android:drawableStart="@drawable/ic_email"
+                    android:drawablePadding="10dp"
                     android:ems="10"
                     android:fontFamily="@font/inter_regular"
                     android:hint="@string/email"
@@ -156,6 +170,9 @@
                     android:autofillHints="password"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    android:backgroundTint="@color/border_color"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawablePadding="10dp"
                     android:background="@drawable/bg_input"
                     android:hint="@string/password"
                     android:inputType="textPassword"
@@ -166,7 +183,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/signupBtn"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -178,6 +195,7 @@
                 android:layout_marginBottom="5dp"
                 android:backgroundTint="@color/black"
                 android:textColor="@android:color/white"
+                android:background="@drawable/bg_input"
                 android:layout_marginStart="20sp"
                 android:layout_marginEnd="20sp"
                 android:layout_marginTop="20dp"

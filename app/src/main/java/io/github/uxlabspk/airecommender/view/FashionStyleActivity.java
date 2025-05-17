@@ -91,7 +91,11 @@ public class FashionStyleActivity extends AppCompatActivity {
 
         binding.weightDropdown.setAdapter(new ArrayAdapter<>(this,
                 R.layout.dropdown_item,
-                new String[]{"<120 lbs", "120-150 lbs", "151-180 lbs", "181-210 lbs", ">210 lbs"}));
+                new String[]{"<54.4 kg",
+                        "54.4–68.0 kg",
+                        "68.5–81.6 kg",
+                        "82.1–95.3 kg",
+                        ">95.3 kg"}));
 
         binding.sizeDropdown.setAdapter(new ArrayAdapter<>(this,
                 R.layout.dropdown_item,
@@ -125,9 +129,6 @@ public class FashionStyleActivity extends AppCompatActivity {
                 R.layout.dropdown_item,
                 new String[]{"Cotton", "Linen", "Silk", "Wool", "Synthetic", "Denim"}));
 
-        binding.makeupProductsDropdown.setAdapter(new ArrayAdapter<>(this,
-                R.layout.dropdown_item,
-                new String[]{"Lipsticks", "Foundations", "Eyeshadows", "Blushes", "Mascaras"}));
     }
 
     private void setupOccasionDropdown() {
@@ -155,6 +156,11 @@ public class FashionStyleActivity extends AppCompatActivity {
     }
 
     private void generateCompleteLook() {
+        if (!validateFormInputs()) {
+            Toast.makeText(this, "Please fill in all fields before proceeding.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         // show “Thinking…” dialog
         ProgressStatus progressStatus = new ProgressStatus(this);
         progressStatus.setCanceledOnTouchOutside(false);
@@ -168,7 +174,7 @@ public class FashionStyleActivity extends AppCompatActivity {
         // collect inputs
         String prompt = String.format(
                 "Generate a culturally authentic Pakistani‑Islamic outfit and makeup recommendation for a %s, age %s, budget %s, body type %s, fit %s, height %s, weight %s, size %s, skin tone %s, skin type %s, clothing style %s, makeup style %s, colors %s, fabric %s, makeup products %s, occasion %s, items %s, preference %s, shades %s, accessories %s. " +
-                        "Focus on modest Islamic aesthetics and traditional Pakistani textiles and silhouettes—think embroidered shalwar kameez, dupatta drapes, hijab options, native block prints and silk fabrics—and recommend halal‑friendly makeup that complements the look.",
+                        "Focus on modest Islamic aesthetics and traditional Pakistani textiles and silhouettes—think embroidered shalwar kameez, dupatta drapes, hijab options, native block prints and silk fabrics—and recommend halal‑friendly makeup that complements the look. The photo should be full body",
                 binding.genderDropdown.getText(),
                 binding.ageDropdown.getText(),
                 binding.budgetDropdown.getText(),
@@ -183,7 +189,6 @@ public class FashionStyleActivity extends AppCompatActivity {
                 binding.makeupStyleDropdown.getText(),
                 binding.colorsDropdown.getText(),
                 binding.fabricDropdown.getText(),
-                binding.makeupProductsDropdown.getText(),
                 binding.occasionTypeDropdown.getText(),
                 binding.itemsDropdown.getText(),
                 binding.preferenceDropdown.getText(),
@@ -192,9 +197,8 @@ public class FashionStyleActivity extends AppCompatActivity {
         );
 
         String url = "https://router.huggingface.co/fal-ai/fal-ai/flux-lora";
-        String authToken = API_KEY;
 
-        ImageRequest.fetchImageWithPost(url, prompt, authToken, new ImageRequest.ImageCallback() {
+        ImageRequest.fetchImageWithPost(url, prompt, API_KEY, new ImageRequest.ImageCallback() {
             @Override
             public void onSuccess(Bitmap image) {
                 runOnUiThread(() -> {
@@ -208,11 +212,11 @@ public class FashionStyleActivity extends AppCompatActivity {
                         // stopping progress indicator
                         progressStatus.dismiss();
 
-                        Intent intent = new Intent(FashionStyleActivity.this, ResultActivity.class);
+                        Intent intent = new Intent(FashionStyleActivity.this, Fashion_results.class);
                         intent.putExtra("image_path", file.getAbsolutePath());
                         intent.putExtra("prompt", prompt);
                         startActivity(intent);
-                        finish();
+
                     } catch (Exception e) {
                         progressStatus.dismiss();
                         e.printStackTrace();
@@ -233,4 +237,27 @@ public class FashionStyleActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean validateFormInputs() {
+        return !binding.ageDropdown.getText().toString().isEmpty() &&
+                !binding.genderDropdown.getText().toString().isEmpty() &&
+                !binding.budgetDropdown.getText().toString().isEmpty() &&
+                !binding.bodyTypeDropdown.getText().toString().isEmpty() &&
+                !binding.fitTypeDropdown.getText().toString().isEmpty() &&
+                !binding.heightDropdown.getText().toString().isEmpty() &&
+                !binding.weightDropdown.getText().toString().isEmpty() &&
+                !binding.sizeDropdown.getText().toString().isEmpty() &&
+                !binding.skinToneDropdown.getText().toString().isEmpty() &&
+                !binding.skinTypeDropdown.getText().toString().isEmpty() &&
+                !binding.clothingStyleDropdown.getText().toString().isEmpty() &&
+                !binding.makeupStyleDropdown.getText().toString().isEmpty() &&
+                !binding.colorsDropdown.getText().toString().isEmpty() &&
+                !binding.fabricDropdown.getText().toString().isEmpty() &&
+                !binding.occasionTypeDropdown.getText().toString().isEmpty() &&
+                !binding.itemsDropdown.getText().toString().isEmpty() &&
+                !binding.preferenceDropdown.getText().toString().isEmpty() &&
+                !binding.shadesDropdown.getText().toString().isEmpty() &&
+                !binding.accessoriesDropdown.getText().toString().isEmpty();
+    }
+
 }

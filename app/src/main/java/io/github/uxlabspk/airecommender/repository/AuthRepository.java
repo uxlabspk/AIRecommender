@@ -1,5 +1,6 @@
 package io.github.uxlabspk.airecommender.repository;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -20,6 +21,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
 
+import io.github.uxlabspk.airecommender.api.SupabaseImageUploader;
 import io.github.uxlabspk.airecommender.model.UserModel;
 
 public class AuthRepository {
@@ -41,19 +43,35 @@ public class AuthRepository {
     }
 
     // SignUp With Email and Password
-    public void registerUser(Uri imagePath, String name, String email, String password) {
+    public void registerUser(Context context, Uri imagePath, String name, String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 assert firebaseUser != null;
 
                 if (imagePath != null) {
-                    StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + firebaseAuth.getCurrentUser().getUid());
-                    ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        UserModel userModel = new UserModel(firebaseUser.getUid(), uri.toString(), name, email);
-                        databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
-                        userLiveData.setValue(firebaseUser);
-                    })).addOnFailureListener(failure -> errorLiveData.setValue(failure.getMessage()));
+                    SupabaseImageUploader uploader = new SupabaseImageUploader(
+                            context,
+                            "img"
+                    );
+
+                    // Upload an image from gallery (after you've selected an image and have its Uri)
+                    uploader.uploadImage(imagePath, "",  new SupabaseImageUploader.UploadCallback() {
+                        @Override
+                        public void onSuccess(String fileUrl) {
+                            Log.d("ImageUpload", "Success! URL: " + fileUrl);
+                            UserModel userModel = new UserModel(firebaseUser.getUid(), fileUrl, name, email);
+                            databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
+                            userLiveData.setValue(firebaseUser);
+                        }
+
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            // Handle failed upload
+                            errorLiveData.setValue("Failed to upload an image");
+                            Log.e("ImageUpload", "Failed: " + errorMessage);
+                        }
+                    });
                 } else {
                     UserModel userModel = new UserModel(firebaseUser.getUid(), "", name, email);
                     databaseReference.child("Users").child(firebaseUser.getUid()).setValue(userModel);
@@ -71,21 +89,6 @@ public class AuthRepository {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 userLiveData.setValue(firebaseAuth.getCurrentUser());
-            } else {
-                errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
-            }
-        });
-    }
-
-    // Continue with google
-    public void continueWithGoogle(AuthCredential authCredential) {
-        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
-                    databaseReference.child(firebaseUser.getUid()).setValue(new UserModel(firebaseUser.getUid(), Objects.requireNonNull(firebaseUser.getPhotoUrl()).toString(), firebaseUser.getDisplayName(), firebaseUser.getEmail()));
-                    userLiveData.setValue(firebaseUser);
-                }
             } else {
                 errorLiveData.setValue(Objects.requireNonNull(task.getException()).getMessage());
             }
@@ -129,27 +132,49 @@ public class AuthRepository {
     }
 
     // update user information
-    public void updateUser(Uri imagePath, String userName) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    public void updateUser(Context context, Uri imagePath, String userName) {
+        if (imagePath == null) {
+            databaseReference.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").setValue(userName)
+                            .addOnSuccessListener(task -> {
+                                successLiveData.setValue("Profile updated successfully");
+                            })
+                            .addOnFailureListener(error -> {
+                                errorLiveData.setValue("Failed to update profile: " + error.getMessage());
 
-        if (user != null) {
-            // Updating User Name in database
-            databaseReference.child("Users").child(user.getUid()).child("userName").setValue(userName);
+                            });
+            return;
+        }
 
-            // update the user image on firebase storage
-            if (imagePath != null) {
-                StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + user.getUid());
-                ref.putFile(imagePath).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                    UserModel userModel = new UserModel(user.getUid(), uri.toString(), userName, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
-                    databaseReference.child("Users").child(user.getUid()).setValue(userModel);
-                    userLiveData.setValue(user);
-                }));
+        SupabaseImageUploader uploader = new SupabaseImageUploader(
+                context,
+                "img"
+        );
+
+        // Upload the new image
+        uploader.uploadImage(imagePath, "", new SupabaseImageUploader.UploadCallback() {
+            @Override
+            public void onSuccess(String fileUrl) {
+                Log.d("ImageUpload", "Update success! URL: " + fileUrl);
+
+                // Update only the profile image URL in the database
+                databaseReference.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").setValue(userName);
+                databaseReference.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userAvatar").setValue(fileUrl)
+                        .addOnSuccessListener(aVoid -> {
+                            // Notify UI about successful update
+                            successLiveData.setValue("Profile image updated successfully");
+                        })
+                        .addOnFailureListener(e -> {
+                            errorLiveData.setValue("Failed to update profile: " + e.getMessage());
+                            Log.e("ProfileUpdate", "Failed: " + e.getMessage());
+                        });
             }
 
-            successLiveData.setValue("Profile updated successfully");
-        } else {
-            Log.e("Firebase", "No authenticated user found.");
-        }
+            @Override
+            public void onFailure(String errorMessage) {
+                errorLiveData.setValue("Failed to upload new profile image");
+                Log.e("ImageUpload", "Failed: " + errorMessage);
+            }
+        });
     }
 
     // logout user

@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import io.github.uxlabspk.airecommender.databinding.FragmentHomeBinding;
 import io.github.uxlabspk.airecommender.view.ClothFormActivity;
 import io.github.uxlabspk.airecommender.view.FashionStyleActivity;

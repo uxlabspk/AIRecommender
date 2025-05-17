@@ -72,7 +72,7 @@ public class EditProfile extends AppCompatActivity {
         progressStatus.show();
         Log.d("URI", "updateProfile: " + filePath);
 //        authViewModel.updateUser(filePath, binding.userName.getText().toString(), binding.userEmail.getText().toString());
-        authViewModel.updateUser(filePath, binding.userName.getText().toString());
+        authViewModel.updateUser(EditProfile.this, filePath, binding.userName.getText().toString());
     }
 
     private void observer() {

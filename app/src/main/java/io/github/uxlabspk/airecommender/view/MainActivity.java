@@ -1,8 +1,13 @@
 package io.github.uxlabspk.airecommender.view;
 
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+
 import io.github.uxlabspk.airecommender.R;
 import io.github.uxlabspk.airecommender.databinding.ActivityMainBinding;
 import io.github.uxlabspk.airecommender.view.fragments.HomeFragment;
@@ -25,23 +30,20 @@ public class MainActivity extends AppCompatActivity {
         // On UI refresh, No transaction will occur.
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            binding.navView.setItemSelected(R.id.item_home, true);
         }
 
-        binding.navView.setOnItemSelectedListener(item -> {
-            Fragment fragment;
-            if (item.getItemId() == R.id.item_home) {
+        binding.navView.setOnItemSelectedListener(id -> {
+            Fragment fragment = new HomeFragment();
+            if (id == R.id.item_home) {
                 fragment = new HomeFragment();
-            } else if (item.getItemId() == R.id.item_profile) {
+            } else if (id == R.id.item_profile) {
                 fragment = new ProfileFragment();
-            } else {
-                fragment = new HomeFragment();
             }
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(binding.fragmentContainer.getId(), fragment)
+                    .replace(R.id.fragment_container, fragment)
                     .commit();
-
-            return true;
         });
     }
 }

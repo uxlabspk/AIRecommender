@@ -15,6 +15,7 @@ android {
         versionName = "1.0"
 
         buildConfigField("String", "apiKey", "\"${project.findProperty("API_KEY") ?: ""}\"")
+        buildConfigField("String", "supabaseApiKey", "\"${project.findProperty("SupaBaseApiKey") ?: ""}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -60,7 +61,13 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
 
+    implementation(libs.photoview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(libs.sdk.for1.android)
+
+    implementation (libs.chip.navigation.bar)
+
 }

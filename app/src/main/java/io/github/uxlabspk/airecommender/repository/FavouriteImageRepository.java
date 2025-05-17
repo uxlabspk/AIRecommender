@@ -60,6 +60,10 @@ public class FavouriteImageRepository {
                         imageLiveData.setValue(images);
                         Log.d("TAG", "onSuccess: " + images.get(0).getImageUrl());
                     });
+                } else {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        message.setValue("No images Found");
+                    });
                 }
             }
 

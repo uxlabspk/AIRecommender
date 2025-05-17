@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -160,13 +162,17 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             @Override
             public void onSuccess(String message) {
                 // Remove from the list and update UI
-                Toast.makeText(context, "Removed ", Toast.LENGTH_SHORT).show();
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    Toast.makeText(context, "Successfully deleted", Toast.LENGTH_SHORT).show();
+                });
 
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                Toast.makeText(context, "Failed to delete: " + errorMessage, Toast.LENGTH_SHORT).show();
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    Toast.makeText(context, "Failed to delete: " + errorMessage, Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }

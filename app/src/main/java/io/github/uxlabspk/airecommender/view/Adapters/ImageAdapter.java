@@ -23,10 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,7 +60,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         Glide.with(context).load(imageList.get(position).getImageUrl()).into(holder.imageView);
 
         // on download button click
-        holder.downloadBtn.setOnClickListener(view -> saveImageToGalleryModern(imageList.get(position).getImageUrl()));
+        holder.downloadBtn.setOnClickListener(view -> downloadAndSaveImageFromUrl(context, imageList.get(position).getImageUrl()));
 
         // delete the image
         holder.deleteBtn.setOnClickListener(view -> {
@@ -65,42 +70,80 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         });
     }
 
-    private void saveImageToGalleryModern(String imagePath) {
-        try {
-            // Create a file object from the image path
-            File sourceFile = new File(imagePath);
-            if (!sourceFile.exists()) {
-                Toast.makeText(context, "Source image doesn't exist", Toast.LENGTH_SHORT).show();
-                return;
-            }
+    public void downloadAndSaveImageFromUrl(Context context, String imageUrl) {
+        new Thread(() -> {
+            HttpURLConnection connection = null;
+            InputStream inputStream = null;
 
-            // Get bitmap from file
-            Bitmap bitmap = BitmapFactory.decodeFile(sourceFile.getAbsolutePath());
+            try {
+                // Download the image
+                URL url = new URL(imageUrl);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
 
-            // Create values for the new image
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.DISPLAY_NAME, sourceFile.getName());
-            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    android.os.Handler mainHandler = new android.os.Handler(context.getMainLooper());
+                    mainHandler.post(() -> Toast.makeText(context, "Failed to download image", Toast.LENGTH_SHORT).show());
+                    return;
+                }
 
-            // Insert the image
-            ContentResolver resolver = context.getContentResolver();
-            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                inputStream = new BufferedInputStream(connection.getInputStream());
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
-            if (imageUri != null) {
-                // Open output stream and save bitmap
-                OutputStream outputStream = resolver.openOutputStream(imageUri);
-                if (outputStream != null) {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    outputStream.close();
+                if (bitmap == null) {
+                    android.os.Handler mainHandler = new android.os.Handler(context.getMainLooper());
+                    mainHandler.post(() -> Toast.makeText(context, "Failed to process image", Toast.LENGTH_SHORT).show());
+                    return;
+                }
 
-                    // Notify user
-                    Toast.makeText(context, "Image saved to gallery", Toast.LENGTH_SHORT).show();
+                // Extract filename from URL
+                String path = url.getPath();
+                String fileName = path.substring(path.lastIndexOf('/') + 1);
+
+                // If filename doesn't have an extension, add .jpg
+                if (!fileName.contains(".")) {
+                    fileName += ".jpg";
+                }
+
+                // Save to gallery
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+
+                ContentResolver resolver = context.getContentResolver();
+                Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+                if (imageUri != null) {
+                    OutputStream outputStream = resolver.openOutputStream(imageUri);
+                    if (outputStream != null) {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                        outputStream.close();
+                        android.os.Handler mainHandler = new android.os.Handler(context.getMainLooper());
+                        mainHandler.post(() -> Toast.makeText(context, "Image Saved To Gallery", Toast.LENGTH_SHORT).show());
+                    }
+                } else {
+                    android.os.Handler mainHandler = new android.os.Handler(context.getMainLooper());
+                    mainHandler.post(() -> Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                android.os.Handler mainHandler = new android.os.Handler(context.getMainLooper());
+                mainHandler.post(() -> Toast.makeText(context, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            } finally {
+                try {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        } catch (Exception e) {
-            Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show();
-        }
+        }).start();
     }
 
     private void deleteImage(String imagePath) {

@@ -50,29 +50,6 @@
                 android:layout_marginHorizontal="32dp"
                 android:backgroundTint="@color/black"
                 android:textColor="@android:color/white"/>
-
-            <TextView
-                android:layout_marginVertical="22dp"
-                android:textSize="21sp"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/or"
-                android:textColor="@color/light_txt_color"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:id="@+id/google_btn"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="@string/google"
-                android:fontFamily="@font/inter_medium"
-                android:textSize="16sp"
-                android:elevation="6dp"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginBottom="5dp"
-                android:backgroundTint="@color/red"
-                android:textColor="@android:color/white"/>
         </LinearLayout>
 
 

@@ -160,35 +160,15 @@ public class ClothFormActivity extends AppCompatActivity {
                                String style, String colors, String fabric, String occasionType,
                                String items, String preference) {
 
-        return "Generate a personalized outfit recommendation for a "
-                + gender
-                + ", aged "
-                + age
-                + ", with a "
-                + bodyType
-                + " body type, "
-                + height
-                + " tall, and weighing "
-                + weight
-                + ". The outfit should be in a "
-                + style
-                + " chic style, featuring "
-                + colors
-                + " colors, made from "
-                + fabric
-                + " material, and suitable for "
-                + occasionType
-                + " occasions. Focus on tops, pants, shoes and  "
-                + items
-                + ", ensuring they fit "
-                + fitType
-                + " preferences. Take into account cultural influences from islamic, incorporating "
-                + "traditional or modern elements as per the user's preference. The person prefers "
-                + preference
-                + "clothing, keeping within a budget of "
-                + budget
-                + ". Provide a detailed description of the outfit, "
-                + "including accessories and footwear, ensuring the recommendation is both practical and stylish. Also show the items along with model ";
+        return "Full-body photorealistic image of a " + gender + " model wearing traditional Pakistani-Islamic clothing. " +
+                "A " + age + "-year-old with " + bodyType + " body type, " + height + " height, " +
+                "in size " + size + ". Show detailed " + style + " style outfit in " + colors + " colors, " +
+                "made from " + fabric + " fabric. The outfit includes " + items + " with " + fitType + " fit, " +
+                "perfect for " + occasionType + " occasions. Budget range " + budget + ". " +
+                "Highlight modest Islamic aesthetics with traditional embroidered shalwar kameez, " +
+                "properly draped dupatta/hijab, and culturally appropriate accessories. " +
+                "The model should be standing, showing the complete outfit from head to toe. " +
+                "Professional fashion photography style, clear lighting, high-resolution, detailed textures.";
     }
 
     private void setupAgeDropdown() {

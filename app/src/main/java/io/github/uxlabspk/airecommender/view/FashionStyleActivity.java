@@ -173,27 +173,42 @@ public class FashionStyleActivity extends AppCompatActivity {
 
         // collect inputs
         String prompt = String.format(
-                "Generate a culturally authentic Pakistani‑Islamic outfit and makeup recommendation for a %s, age %s, budget %s, body type %s, fit %s, height %s, weight %s, size %s, skin tone %s, skin type %s, clothing style %s, makeup style %s, colors %s, fabric %s, occasion %s, items %s, preference %s, shades %s, accessories %s. " +
-                        "Focus on modest Islamic aesthetics and traditional Pakistani textiles and silhouettes—think embroidered shalwar kameez, dupatta drapes, hijab options, native block prints and silk fabrics—and recommend halal‑friendly makeup that complements the look. The photo should be full body",
+                "Photorealistic full-body image of a %s model wearing a traditional Pakistani-Islamic outfit. " +
+                        "The model is %s years old with %s body type, %s height, weighing in %s range, size %s, " +
+                        "%s skin tone, and %s skin type. " +
+
+                        "Show a detailed %s clothing style in %s colors made from %s fabric with %s fit, " +
+                        "appropriate for %s occasions. The outfit features %s with %s fashion preference. " +
+
+                        "Include professional %s makeup style with %s shades and %s accessories. " +
+
+                        "The outfit must showcase authentic Pakistani-Islamic elements: embroidered patterns, " +
+                        "properly styled dupatta/hijab, and traditional silhouettes. " +
+
+                        "Photography style: Professional fashion photography, clear lighting, high-resolution, " +
+                        "showing full body from head to toe, standing pose, against a neutral background. " +
+                        "Budget range shown: %s.",
+
+                // Parameters in order
                 binding.genderDropdown.getText(),
                 binding.ageDropdown.getText(),
-                binding.budgetDropdown.getText(),
                 binding.bodyTypeDropdown.getText(),
-                binding.fitTypeDropdown.getText(),
                 binding.heightDropdown.getText(),
                 binding.weightDropdown.getText(),
                 binding.sizeDropdown.getText(),
                 binding.skinToneDropdown.getText(),
                 binding.skinTypeDropdown.getText(),
                 binding.clothingStyleDropdown.getText(),
-                binding.makeupStyleDropdown.getText(),
                 binding.colorsDropdown.getText(),
                 binding.fabricDropdown.getText(),
+                binding.fitTypeDropdown.getText(),
                 binding.occasionTypeDropdown.getText(),
                 binding.itemsDropdown.getText(),
                 binding.preferenceDropdown.getText(),
+                binding.makeupStyleDropdown.getText(),
                 binding.shadesDropdown.getText(),
-                binding.accessoriesDropdown.getText()
+                binding.accessoriesDropdown.getText(),
+                binding.budgetDropdown.getText()
         );
 
         String url = "https://router.huggingface.co/fal-ai/fal-ai/flux-lora";

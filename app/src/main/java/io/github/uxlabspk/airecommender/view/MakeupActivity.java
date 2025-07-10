@@ -144,14 +144,16 @@ public class MakeupActivity extends AppCompatActivity {
     }
 
     private String buildPrompt(String age, String budget, String skinTone, String skinType, String makeupStyle,
-                                String occasionType, String shades, String accessories) {
-        return "Generate a personalized makeup recommendation for a person aged " + age +
-                " with a budget of " + budget + ". The person has a " + skinTone +
-                " skin tone and " + skinType + " skin type. They prefer a " + makeupStyle +
-                " makeup look using products, suitable for " + occasionType +
-                " occasions. Include suggestions for shades (" + shades +
-                ") and recommended accessories (" + accessories +
-                "). Provide a detailed and creative description.";
+                               String occasionType, String shades, String accessories) {
+        return "Photorealistic close-up portrait of a model with " + skinTone +
+                " skin tone wearing professional " + makeupStyle + " makeup look. " +
+                "The makeup should be suitable for a person aged " + age +
+                " with " + skinType + " skin type attending a " + occasionType + " event. " +
+                "Highlight " + shades + " color palette and include " + accessories + " as accessories. " +
+                "The makeup application should be visible in detail - eyeshadow, lipstick, foundation, blush, and contour. " +
+                "Professional beauty photography with soft, flattering lighting, high resolution, detailed textures. " +
+                "The image should showcase the makeup techniques that would work within a " + budget + " budget. " +
+                "Clean background, professional makeup artistry, modern beauty standards, glamour photography.";
     }
 
     // Setup dropdown for Age
